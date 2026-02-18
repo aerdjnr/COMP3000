@@ -4,10 +4,11 @@ using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
 using System.DirectoryServices.Protocols;
 using System.Net;
+using System;
 
 namespace Velocity.ViewModels
 {
-    public partial class MainWindowViewModel : ViewModelBase
+    public partial class LoginViewModel : ViewModelBase
     {
         // Properties/Variables
         [ObservableProperty]
@@ -16,7 +17,7 @@ namespace Velocity.ViewModels
         [ObservableProperty]
         public string _Password;
 
-
+        public event Action? TransitionMain;
         // Commands/Functions
         [RelayCommand]
         private async Task Login()
@@ -31,10 +32,10 @@ namespace Velocity.ViewModels
         private async Task<bool> VerifyLDAP()
         {
             // Sends to DC for check
-            string DN = "users.local";
+            string DC = "users.local";
             int port = 389;
 
-            using var LDAPquery= new LdapConnection(new LdapDirectoryIdentifier(DN, port));
+            using var LDAPquery= new LdapConnection(new LdapDirectoryIdentifier(DC, port));
 
             var Creds = new NetworkCredential(Username+"@users.local", Password);
             return await Task.Run(() =>
@@ -57,6 +58,7 @@ namespace Velocity.ViewModels
         private void OpenMain()
         {
             // Where I will transition ownership of "main" attribute to the core app window
+            TransitionMain?.Invoke();
         }
 
     }

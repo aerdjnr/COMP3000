@@ -26,4 +26,16 @@
     <PackageReference Include="ReactiveUI" Version="22.3.1" />
     <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.3" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\AppWindow.axaml.cs">
+      <DependentUpon>AppWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LoginWindow.axaml.cs">
+      <DependentUpon>LoginWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\HomeWindow.axaml.cs">
+      <DependentUpon>HomeWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
