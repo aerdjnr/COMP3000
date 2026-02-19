@@ -28,14 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\AppWindow.axaml.cs">
-      <DependentUpon>AppWindow.axaml</DependentUpon>
+    <Compile Update="Views\MainWindow.axaml.cs">
+      <DependentUpon>MainWindow.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\LoginWindow.axaml.cs">
-      <DependentUpon>LoginWindow.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\HomeWindow.axaml.cs">
-      <DependentUpon>HomeWindow.axaml</DependentUpon>
+    <Compile Update="Views\LoginView.axaml.cs">
+      <DependentUpon>LoginView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

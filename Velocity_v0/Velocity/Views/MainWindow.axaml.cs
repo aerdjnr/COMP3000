@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Velocity.ViewModels;
 
 namespace Velocity.Views
 {
@@ -7,6 +8,7 @@ namespace Velocity.Views
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
     }
 }

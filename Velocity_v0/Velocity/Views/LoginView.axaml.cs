@@ -1,14 +1,12 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 
 namespace Velocity.Views
 {
-    public partial class HomeWindow : Window
+    public partial class LoginView : Window
     {
-        public HomeWindow()
+        public LoginView()
         {
             InitializeComponent();
         }
     }
-};
+}

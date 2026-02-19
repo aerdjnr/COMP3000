@@ -10,6 +10,7 @@ namespace Velocity.ViewModels
 {
     public partial class LoginViewModel : ViewModelBase
     {
+        
         // Properties/Variables
         [ObservableProperty]
         public string _Username;
@@ -17,7 +18,7 @@ namespace Velocity.ViewModels
         [ObservableProperty]
         public string _Password;
 
-        public event Action? TransitionMain;
+        public event Action? TransitionHome;
         // Commands/Functions
         [RelayCommand]
         private async Task Login()
@@ -57,8 +58,8 @@ namespace Velocity.ViewModels
         [RelayCommand]
         private void OpenMain()
         {
-            // Where I will transition ownership of "main" attribute to the core app window
-            TransitionMain?.Invoke();
+            // Swap over to Home Page
+            TransitionHome?.Invoke();
         }
 
     }

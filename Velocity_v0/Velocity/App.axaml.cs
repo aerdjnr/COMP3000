@@ -25,7 +25,7 @@ namespace Velocity
                 DisableAvaloniaDataAnnotationValidation();
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new LoginViewModel(),
+                    DataContext = new MainWindowViewModel(),
                 };
             }
 
