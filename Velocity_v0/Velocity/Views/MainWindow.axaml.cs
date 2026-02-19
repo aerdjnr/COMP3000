@@ -8,7 +8,6 @@ namespace Velocity.Views
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
         }
     }
 }

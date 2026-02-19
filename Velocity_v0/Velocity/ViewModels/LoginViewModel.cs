@@ -10,7 +10,9 @@ namespace Velocity.ViewModels
 {
     public partial class LoginViewModel : ViewModelBase
     {
-        
+        public override double? SetHeight => 400;
+        public override double? SetWidth => 400;
+
         // Properties/Variables
         [ObservableProperty]
         public string _Username;
