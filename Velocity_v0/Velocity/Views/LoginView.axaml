@@ -5,9 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
         x:Class="Velocity.Views.LoginView"
-        x:DataType="vm:LoginViewModel"
-        Width="400"
-        Height="500">
+        x:DataType="vm:LoginViewModel">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,

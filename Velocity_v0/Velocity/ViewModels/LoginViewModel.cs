@@ -10,6 +10,13 @@ namespace Velocity.ViewModels
 {
     public partial class LoginViewModel : ViewModelBase
     {
+        // Transition initiation
+        private readonly MainWindowViewModel _main;
+        public LoginViewModel(MainWindowViewModel main)
+        {
+            _main = main;
+        }
+
         public override double? SetHeight => 400;
         public override double? SetWidth => 400;
 
@@ -27,8 +34,9 @@ namespace Velocity.ViewModels
         {
             // Error checking, only at the bottom should "OpenMain" be run
             Debug.WriteLine($"Username: {Username+"@users.local"}, Password: {Password}");
-            bool result = await VerifyLDAP();
-            Debug.WriteLine(result);
+            //bool result = await VerifyLDAP();
+            //Debug.WriteLine(result);
+            _main.NavHome();
         }
 
         [RelayCommand]

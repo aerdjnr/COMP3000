@@ -10,15 +10,16 @@
         }
         public MainWindowViewModel()
         {
-            NavToLogin();
+            InitLogin();
         }
-        public void NavToLogin()
+        public void InitLogin()
         {
-            CurrentView = new LoginViewModel();
+            CurrentView = new LoginViewModel(this);
+            
         }
         public void NavHome()
         {
-            // CurrentView = new homeViewModelName()
+            CurrentView = new HomeViewModel();
         }
     }
 }
