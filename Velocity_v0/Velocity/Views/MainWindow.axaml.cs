@@ -9,5 +9,6 @@ namespace Velocity.Views
         {
             InitializeComponent();
         }
+        
     }
 }

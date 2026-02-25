@@ -17,8 +17,10 @@ namespace Velocity.ViewModels
             _main = main;
         }
 
-        public override double? SetHeight => 400;
         public override double? SetWidth => 400;
+        public override double? SetHeight => 400;
+        
+        
 
         // Properties/Variables
         [ObservableProperty]

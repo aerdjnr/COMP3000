@@ -8,18 +8,18 @@
             get => _CurrentView;
             set => SetProperty(ref _CurrentView, value);
         }
+
         public MainWindowViewModel()
         {
             InitLogin();
         }
-        public void InitLogin()
-        {
-            CurrentView = new LoginViewModel(this);
-            
-        }
-        public void NavHome()
-        {
-            CurrentView = new HomeViewModel();
-        }
+
+        public void InitLogin() => CurrentView = new LoginViewModel(this);
+          
+        public void NavHome() => CurrentView = new HomeViewModel();
+
+        // public void NavTut() => CurrentView = new TutViewModel();
+        // public void NavLabSelect() => CurrentView = new LabSelectViewModel();
+
     }
 }
