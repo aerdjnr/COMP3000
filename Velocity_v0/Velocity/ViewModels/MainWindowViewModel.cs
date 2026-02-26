@@ -11,13 +11,15 @@
 
         public MainWindowViewModel()
         {
-            InitLogin();
+            //InitLogin();
+            CLIbuild();
         }
 
         public void InitLogin() => CurrentView = new LoginViewModel(this);
           
         public void NavHome() => CurrentView = new HomeViewModel();
 
+        public void CLIbuild() => CurrentView = new CLIViewModel();
         // public void NavTut() => CurrentView = new TutViewModel();
         // public void NavLabSelect() => CurrentView = new LabSelectViewModel();
 

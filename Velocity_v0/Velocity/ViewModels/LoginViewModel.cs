@@ -19,8 +19,9 @@ namespace Velocity.ViewModels
 
         public override double? SetWidth => 400;
         public override double? SetHeight => 400;
+        public event Action? TransitionHome;
         
-        
+
 
         // Properties/Variables
         [ObservableProperty]
@@ -29,7 +30,7 @@ namespace Velocity.ViewModels
         [ObservableProperty]
         public string _Password;
 
-        public event Action? TransitionHome;
+
         // Commands/Functions
         [RelayCommand]
         private async Task Login()

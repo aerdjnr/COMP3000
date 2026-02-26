@@ -37,5 +37,8 @@
     <Compile Update="Views\HomeView.axaml.cs">
       <DependentUpon>HomeView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\CLIView.axaml.cs">
+      <DependentUpon>CLIView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
