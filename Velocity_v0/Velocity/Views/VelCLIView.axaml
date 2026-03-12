@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Velocity.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Velocity.Views.VelCLIView"
+             x:DataType="vm:VelCLIViewModel">
+    
+    <DockPanel LastChildFill="True">
+        <TextBox DockPanel.Dock="Top" 
+            BorderThickness="0"
+            Background="Transparent"
+            FocusAdorner="{x:Null}"
+            BorderBrush="Transparent"
+            TextWrapping="Wrap"
+            Text="This is a tutorial of the tutorials! Each button opens a trial version of the real labs so you can get a basic understanding (or a warm up) before the lab! To get started, type 'help' to get a list of available commands you can use within each lab"/>
+		
+        <TextBox DockPanel.Dock="Bottom"
+            Text="{Binding CommandInput, UpdateSourceTrigger=PropertyChanged}"
+            FontFamily="Consolas"
+            KeyDown="PressEnter"
+            Watermark="Type here:">
+        </TextBox>
+        
+        <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding OutputLines}">
+                <ItemsControl.ItemTemplate>
+					<DataTemplate>
+					    <TextBlock Text="{Binding}"
+                            FontFamily="Consolas"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+				
+            </ItemsControl>
+        </ScrollViewer>
+
+
+    </DockPanel>
+</UserControl>

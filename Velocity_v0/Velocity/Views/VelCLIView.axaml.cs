@@ -7,23 +7,22 @@ using Velocity.ViewModels;
 
 namespace Velocity.Views
 {
-    public partial class CLIView : UserControl
+    public partial class VelCLIView : UserControl
     {
-        public CLIView()
+        public VelCLIView()
         {
             InitializeComponent();
         }
 
         private void PressEnter(object? sender, KeyEventArgs e)
         {
-            if (DataContext is not CLIViewModel vm)
+            if (DataContext is not VelCLIViewModel vm)
                 return;
             switch (e.Key)
             {
                 case Key.Enter:
                     vm.ExecuteCommand.Execute(null);
                     e.Handled = true;
-                    Debug.WriteLine("Reaches axaml.cs");
                     break;
             }
         }
