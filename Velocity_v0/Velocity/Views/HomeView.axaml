@@ -43,7 +43,8 @@
             VerticalContentAlignment="Center"
             HorizontalAlignment="Left"
             Margin="200,0,0,0"
-            Grid.Row="4"/>
+            Grid.Row="4"
+            Command="{Binding OpenTutCommand}"/>
         
         <Button Content="Labs"
             FontSize="16"

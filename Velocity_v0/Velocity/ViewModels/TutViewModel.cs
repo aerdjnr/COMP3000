@@ -2,10 +2,10 @@
 
 namespace Velocity.ViewModels
 {
-    public partial class HomeViewModel : ViewModelBase
+    public partial class TutViewModel : ViewModelBase
     {
         private readonly MainWindowViewModel _main;
-        public HomeViewModel(MainWindowViewModel main)
+        public TutViewModel(MainWindowViewModel main)
         {
             _main = main;
         }
@@ -13,9 +13,15 @@ namespace Velocity.ViewModels
         public override double? SetHeight => 500;
 
         [RelayCommand]
-        private void OpenTut()
+        private void OpenVelocity()
         {
-            _main.NavTut();
+            _main.VelCLI();
         }
-    }   
+
+        [RelayCommand]
+        private void OpenDefense()
+        {
+            _main.DefCLI();
+        }
+    }
 }
