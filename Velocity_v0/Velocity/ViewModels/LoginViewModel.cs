@@ -19,7 +19,6 @@ namespace Velocity.ViewModels
 
         public override double? SetWidth => 400;
         public override double? SetHeight => 400;
-        public event Action? TransitionHome;
         
 
 
@@ -68,15 +67,6 @@ namespace Velocity.ViewModels
             
         }
 
-        [RelayCommand]
-        private void OpenMain()
-        {
-            // Swap over to Home Page
-            TransitionHome?.Invoke();
-        }
-
     }
-
-
 
 }
