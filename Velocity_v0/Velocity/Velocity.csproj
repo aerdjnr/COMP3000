@@ -28,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\TutView.axaml.cs">
+      <DependentUpon>TutView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\MainWindow.axaml.cs">
       <DependentUpon>MainWindow.axaml</DependentUpon>
     </Compile>
@@ -37,8 +40,11 @@
     <Compile Update="Views\HomeView.axaml.cs">
       <DependentUpon>HomeView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\CLIView.axaml.cs">
-      <DependentUpon>CLIView.axaml</DependentUpon>
+    <Compile Update="Views\DefCLIView.axaml.cs">
+      <DependentUpon>DefCLIView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\VelCLIView.axaml.cs">
+      <DependentUpon>VelCLIView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
