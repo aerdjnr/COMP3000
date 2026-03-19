@@ -1,10 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
+
 
 
 namespace Velocity.ViewModels
@@ -40,27 +37,29 @@ namespace Velocity.ViewModels
 
     public class DefCommands
     {
-        string[] temp = { "Background Task performed, output changed" };
-        
-        //Layer 2 variables
+        // Command variables
         bool fw_state = false;
+
+        string[] service_list = ["Service       Port\n"];
+        string webService = "WebService    8080";
+        string dataService = "DataService   5600";
+        string apiService = "ApiService    3000";
         public IEnumerable<string> Process(string command)
         {
-            //Command splicing to specify command and necessary process required
+            // Command splicing to specify command and necessary process required
             string cd = command.Trim().ToLowerInvariant();
             string[] cd_ext = cd.Split(' ');
-            
+
+            // Command
             if (cd_ext.Length == 1)
             {
                 return cd switch
                 {
                     "help" => new[]
                     {
-                        "Input the command to list available options",
+                        "Enter the command to list available options",
                         "Commands:",
                         "fw - Configure the device's firewall",
-                        "show - lists available resources based on the option given",
-                        "port - configure ports",
                         "service - configure services",
                     },
                     "fw" => new[]
@@ -71,20 +70,11 @@ namespace Velocity.ViewModels
                         "disable - turns off the firewall",
                         "rule - configure firewall rules",
                     },
-                    "show" => new[]
-                    {
-                        "ports - list currently open ports",
-                        "services - list currently running services",
-                    },
-                    "port" => new[]
-                    {
-                        "open [ports] - opens the given ports. E.g. open 22,25,53,80",
-                        "close [ports] - closes the given ports. E.g. close 443,445,3389"
-                    },
                     "service" => new[]
                     {
-                        "start [service] - initiates a service",
-                        "stop [service] - halts a service"
+                        "show - list currently running services",
+                        "start - initiates a service",
+                        "stop - halts a service"
                     },
                     _ => new[]
                     {
@@ -92,6 +82,8 @@ namespace Velocity.ViewModels
                     }
                 };
             }
+
+            // Command + option
             if (cd_ext.Length == 2)
             {
                 if (cd_ext[0] == "fw")
@@ -120,16 +112,52 @@ namespace Velocity.ViewModels
                             return new[] 
                             { 
                                 "show - lists currently enabled rules",
-                                "add - adds an example rule",
-                                "remove - removes an example rule"
+                                "add - inserts a given rule",
+                                "remove - delete a given rule"
                             };
 
+                        default:
+                            return new[]
+                            {
+                              "Invalid option"
+                            };
                     }
-                    Debug.WriteLine("fw command detected");
                 }
-                if (cd_ext[0] == "show")
+                if (cd_ext[0] == "service")
                 {
-                    
+                    switch (cd_ext[1])
+                    {
+                        case "show":
+                            if (service_list.Length == 1)
+                            {
+                                return new[]
+                                {
+                                    "No services currently running"
+                                };
+                            }
+                            return service_list;
+                        case "start":
+                            return new[]
+                            {
+                                "Here is a list of example services to start:",
+                                "WebService",
+                                "DataService",
+                                "ApiService",
+                            };
+                        case "stop":
+                            return new[]
+                            {
+                                "Here is a list of example services to stop:",
+                                "WebService",
+                                "DataService",
+                                "ApiService",
+                            };
+                        default:
+                            return new[]
+                            {
+                              "Invalid option"
+                            };
+                    }
                 }
                 return cd switch
                 {
@@ -144,7 +172,7 @@ namespace Velocity.ViewModels
             {
                 _ => new[]
                 {
-                    "Potential bypass located, no catch made"
+                    "Potential escape located"
                 }
             };
         }
