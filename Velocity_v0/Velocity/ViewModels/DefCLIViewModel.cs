@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 
 
 namespace Velocity.ViewModels
@@ -36,18 +37,19 @@ namespace Velocity.ViewModels
             CommandInput = string.Empty;
         }
     }
+
     public class DefCommands
     {
         string[] temp = { "Background Task performed, output changed" };
-        bool check = false;
+        
+        //Layer 2 variables
+        bool fw_state = false;
         public IEnumerable<string> Process(string command)
         {
+            //Command splicing to specify command and necessary process required
             string cd = command.Trim().ToLowerInvariant();
             string[] cd_ext = cd.Split(' ');
-            foreach(var item in cd_ext)
-            {
-                Debug.WriteLine(item);
-            }
+            
             if (cd_ext.Length == 1)
             {
                 return cd switch
@@ -67,7 +69,7 @@ namespace Velocity.ViewModels
                         "status - displays firewall state",
                         "enable - turns on the firewall",
                         "disable - turns off the firewall",
-                        "rules - list currently enabled rules",
+                        "rule - configure firewall rules",
                     },
                     "show" => new[]
                     {
@@ -86,10 +88,58 @@ namespace Velocity.ViewModels
                     },
                     _ => new[]
                     {
-                        "1 word command given, but is not valid"
+                        "Invalid command"
                     }
                 };
             }
+            if (cd_ext.Length == 2)
+            {
+                if (cd_ext[0] == "fw")
+                {
+                    switch(cd_ext[1])
+                    {
+                        case "status":
+                            if (fw_state==true)
+                            {
+                                return new[] { "State: On" };
+                            }
+                            else
+                            {
+                                return new[] { "State: Off" };
+                            }
+
+                        case "enable":
+                            fw_state = true;
+                            return new[] { "Firewall enabled" };
+                        
+                        case "disable":
+                            fw_state = false;
+                            return new[] { "Firewall disabled" };
+                        
+                        case "rule":
+                            return new[] 
+                            { 
+                                "show - lists currently enabled rules",
+                                "add - adds an example rule",
+                                "remove - removes an example rule"
+                            };
+
+                    }
+                    Debug.WriteLine("fw command detected");
+                }
+                if (cd_ext[0] == "show")
+                {
+                    
+                }
+                return cd switch
+                {
+                    _ => new[]
+                    {
+                        "Invalid command or option"
+                    }
+                };
+            }
+
             return cd switch
             {
                 _ => new[]
