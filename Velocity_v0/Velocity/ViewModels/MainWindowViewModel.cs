@@ -11,8 +11,9 @@
 
         public MainWindowViewModel()
         {
-            InitLogin();
-            //CLIbuild();
+            //InitLogin();
+            DefCLI();
+            //NavTut();
         }
 
         public void InitLogin() => CurrentView = new LoginViewModel(this);

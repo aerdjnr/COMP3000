@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
 
@@ -40,46 +42,59 @@ namespace Velocity.ViewModels
         bool check = false;
         public IEnumerable<string> Process(string command)
         {
-            var cd = command.Trim().ToLowerInvariant();
-            if (cd == "help")
+            string cd = command.Trim().ToLowerInvariant();
+            string[] cd_ext = cd.Split(' ');
+            foreach(var item in cd_ext)
             {
-                if (check == true)
+                Debug.WriteLine(item);
+            }
+            if (cd_ext.Length == 1)
+            {
+                return cd switch
                 {
-                    return temp;
-                }
-                check = true;
-                return new[] 
-                {
-                    "Commands:",
-                    "ufw enable - turns on the device's firewall",
-                    "show ports - lists currently open ports",
-                    "show services - lists currently running services",
-                    "close ports - turn off unnecessary ports",
-                    "stop services - turn off unnecessary services",
+                    "help" => new[]
+                    {
+                        "Input the command to list available options",
+                        "Commands:",
+                        "fw - Configure the device's firewall",
+                        "show - lists available resources based on the option given",
+                        "port - configure ports",
+                        "service - configure services",
+                    },
+                    "fw" => new[]
+                    {
+                        "Options:",
+                        "status - displays firewall state",
+                        "enable - turns on the firewall",
+                        "disable - turns off the firewall",
+                        "rules - list currently enabled rules",
+                    },
+                    "show" => new[]
+                    {
+                        "ports - list currently open ports",
+                        "services - list currently running services",
+                    },
+                    "port" => new[]
+                    {
+                        "open [ports] - opens the given ports. E.g. open 22,25,53,80",
+                        "close [ports] - closes the given ports. E.g. close 443,445,3389"
+                    },
+                    "service" => new[]
+                    {
+                        "start [service] - initiates a service",
+                        "stop [service] - halts a service"
+                    },
+                    _ => new[]
+                    {
+                        "1 word command given, but is not valid"
+                    }
                 };
             }
             return cd switch
             {
-                "help" => new[]
-                {
-                    "Commands:",
-                    "ufw enable - turns on the device's firewall",
-                    "show ports - lists currently open ports",
-                    "show services - lists currently running services",
-                    "close ports - turn off unnecessary ports",
-                    "stop services - turn off unnecessary services",
-                },
-                "command1" => new[]
-                {
-                    "Wow! You're a fast learner, or you already know what you're doing :D"
-                },
-                "command2" => new[]
-                {
-                    "Sorry, I haven't coded a response for this one.."
-                },
                 _ => new[]
                 {
-                    $"Unkown command: {command}"
+                    "Potential bypass located, no catch made"
                 }
             };
         }
