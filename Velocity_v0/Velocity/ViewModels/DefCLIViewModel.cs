@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using DynamicData;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 
 
@@ -37,10 +39,13 @@ namespace Velocity.ViewModels
 
     public class DefCommands
     {
-        // Command variables
+        // Command "fw" variables
         bool fw_state = false;
+        string[] fw_rule_list = ["To    Action    From"];
+        string fw_rule = "22/tcp    Allow   192.168.0.10";
 
-        string[] service_list = ["Service       Port\n"];
+        // Command "service" variables
+        string[] service_list = ["Service       Port"];
         string webService = "WebService    8080";
         string dataService = "DataService   5600";
         string apiService = "ApiService    3000";
@@ -136,6 +141,7 @@ namespace Velocity.ViewModels
                                 };
                             }
                             return service_list;
+
                         case "start":
                             return new[]
                             {
@@ -144,6 +150,7 @@ namespace Velocity.ViewModels
                                 "DataService",
                                 "ApiService",
                             };
+
                         case "stop":
                             return new[]
                             {
@@ -152,6 +159,7 @@ namespace Velocity.ViewModels
                                 "DataService",
                                 "ApiService",
                             };
+
                         default:
                             return new[]
                             {
@@ -168,6 +176,86 @@ namespace Velocity.ViewModels
                 };
             }
 
+            // Command + Option + Object
+            if (cd_ext.Length == 3)
+            {
+                if (cd_ext[0] == "fw")
+                {
+                    switch (cd_ext[2])
+                    {
+                        case "show":
+                            if (fw_rule_list.Length == 1)
+                            {
+                                return new[]
+                                {
+                                    "No rules configured"
+                                };
+                            }
+                            return fw_rule_list;
+
+                        case "add":
+                            return fw_rule_list.Append(fw_rule);
+
+                        case "remove":
+                            fw_rule_list = new string[] { fw_rule_list[0] };
+                            return fw_rule_list;
+
+                        default:
+                            return new[]
+                            {
+                              "Invalid option"
+                            };
+                    }
+                }
+
+                if (cd_ext[0] == "service")
+                {
+                    if (cd_ext[1]=="start")
+                    {
+                        switch (cd_ext[2])
+                        {
+                            case "webservice":
+                                return service_list.Append(webService);
+                        
+                            case "dataservice":
+                                return service_list.Append(dataService); 
+                        
+                            case "apiservice":
+                                return service_list.Append(apiService);
+
+                            default:
+                                return new[] 
+                                {
+                                    "Invalid service. Try 'service start' for a list of example services"
+                                };
+                        }
+                    }
+                    if (cd_ext[1] == "stop")
+                    {
+                        List<string> list_conv = service_list.ToList();
+                        switch (cd_ext[2]) 
+                        {
+                            case "webservice":
+                                list_conv.Remove(webService);
+                                return list_conv.ToArray();
+
+                            case "dataservice":
+                                list_conv.Remove(dataService);
+                                return list_conv.ToArray();
+
+                            case "apiservice":
+                                list_conv.Remove(apiService);
+                                return list_conv.ToArray();
+
+                            default:
+                                return new[]
+                                {
+                                    "Invalid service. Try 'service start' for a list of example services"
+                                };
+                        }
+                    }
+                }
+            }
             return cd switch
             {
                 _ => new[]
