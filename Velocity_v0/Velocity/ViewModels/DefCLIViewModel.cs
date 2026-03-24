@@ -128,6 +128,7 @@ namespace Velocity.ViewModels
                             };
                     }
                 }
+
                 if (cd_ext[0] == "service")
                 {
                     switch (cd_ext[1])
@@ -167,6 +168,7 @@ namespace Velocity.ViewModels
                             };
                     }
                 }
+
                 return cd switch
                 {
                     _ => new[]

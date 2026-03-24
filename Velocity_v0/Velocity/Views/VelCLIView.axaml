@@ -14,7 +14,7 @@
             FocusAdorner="{x:Null}"
             BorderBrush="Transparent"
             TextWrapping="Wrap"
-            Text="This is a tutorial of the tutorials! Each button opens a trial version of the real labs so you can get a basic understanding (or a warm up) before the lab! To get started, type 'help' to get a list of available commands you can use within each lab"/>
+            Text="This is a tutorial of the tutorials! Each button opens a trial version of the real labs so you can get a basic understanding (or a warm up) before the lab! To get started, type 'help' to get a list of available commands you can use."/>
 		
         <TextBox DockPanel.Dock="Bottom"
             Text="{Binding CommandInput, UpdateSourceTrigger=PropertyChanged}"
