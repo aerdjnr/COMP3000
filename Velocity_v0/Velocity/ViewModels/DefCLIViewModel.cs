@@ -1,5 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using DynamicData;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -20,6 +20,9 @@ namespace Velocity.ViewModels
             set => SetProperty(ref _commandInput, value);
         }
 
+        [ObservableProperty]
+        private bool _MenuState;
+
         [RelayCommand]
         private void Execute() 
         { 
@@ -34,6 +37,12 @@ namespace Velocity.ViewModels
                 OutputLines.Add(line);
             }
             CommandInput = string.Empty;
+        }
+
+        [RelayCommand]
+        private void MenuToggle()
+        {
+            MenuState = !MenuState;
         }
     }
 
@@ -266,5 +275,10 @@ namespace Velocity.ViewModels
                 }
             };
         }
+    }
+
+    public class DefQBank()
+    {
+        string apple = "";
     }
 }

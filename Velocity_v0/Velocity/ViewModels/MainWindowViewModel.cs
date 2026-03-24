@@ -12,8 +12,8 @@
         public MainWindowViewModel()
         {
             //InitLogin();
-            //DefCLI();
-            VelCLI();
+            DefCLI();
+            //VelCLI();
             //NavTut();
         }
 
