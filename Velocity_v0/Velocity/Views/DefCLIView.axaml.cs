@@ -1,8 +1,5 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Markup.Xaml;
-using System.Diagnostics;
 using Velocity.ViewModels;
 
 namespace Velocity.Views
@@ -27,5 +24,4 @@ namespace Velocity.Views
             }
         }
     }
-
 }

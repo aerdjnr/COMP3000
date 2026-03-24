@@ -17,10 +17,48 @@
                 <Button Content="☰"
                         Command="{Binding MenuToggleCommand}"/>
                 <StackPanel>
-                    <TextBlock>Context, helpful learning information</TextBlock>
-                    <TextBlock>Question</TextBlock>
-                    <TextBox>Enter Answer</TextBox>
-                    <Button>Check</Button>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+							
+                            <TextBlock
+                                Padding="0,20,0,50"
+                                Grid.Row="0"
+                                TextWrapping="Wrap">
+                                Lorem ipsum dolor sit amet, 
+                                consectetur adipiscing elit, 
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                Ut enim ad minim veniam, 
+                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </TextBlock>
+     
+                            <TextBlock
+                                Grid.Row="1" Text="{Binding Q1}"></TextBlock> 
+                            <TextBox Grid.Row="2" Watermark="Answer"/>
+                            <Button 
+                                Grid.Row="3"
+                                Margin="0,0,0,20">
+                                Check</Button>
+
+                            <TextBlock
+                                Grid.Row="4" Text="{Binding Q2}"></TextBlock>
+                            <TextBox Grid.Row="5" Watermark="Answer"/>
+                            <Button 
+                                Grid.Row="6"
+                                Margin="0,0,0,20">
+                                Check</Button>
+
+                            <TextBlock
+                                Grid.Row="7">Question</TextBlock>
+                            <TextBox Grid.Row="8" Watermark="Answer"/>
+                            <Button 
+                                Grid.Row="9"
+                                Margin="0,0,0,20">
+                                Check</Button>
+
+                        </Grid>
+                    </ScrollViewer>
                 </StackPanel>
             </StackPanel>
         </SplitView.Pane>

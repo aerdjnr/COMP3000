@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,6 +11,11 @@ namespace Velocity.ViewModels
 {
     public partial class DefCLIViewModel : ViewModelBase
     {
+        public DefCLIViewModel()
+        {
+            DefQBank();
+        }
+
         private readonly DefCommands _givenCommand = new();
         private string _commandInput = string.Empty;
         public ObservableCollection<string> OutputLines { get; } = new();
@@ -20,8 +26,21 @@ namespace Velocity.ViewModels
             set => SetProperty(ref _commandInput, value);
         }
 
+
+
+
         [ObservableProperty]
-        private bool _MenuState;
+        private bool _MenuState = true;
+
+        [ObservableProperty]
+        string _Q1;
+        
+        [ObservableProperty]
+        string _Q2;
+        
+        [ObservableProperty]
+        string _Q3;
+
 
         [RelayCommand]
         private void Execute() 
@@ -43,6 +62,25 @@ namespace Velocity.ViewModels
         private void MenuToggle()
         {
             MenuState = !MenuState;
+        }
+
+        public void DefQBank()
+        {
+            Dictionary<int, string> Q_bank = new Dictionary<int, string>()
+            {
+                {1,"Sample question1?"},
+                {2,"Sample question2?"},
+                {3,"Sample question3?"},
+                {4,"Sample question4?"},
+                {5,"Sample question5?"},
+                {6,"Sample question6?"},
+                {7,"Sample question7?"},
+            };
+
+            Random rand = new Random();
+            Q1 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Value;
+            Q2 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Value;
+            Q3 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Value;
         }
     }
 
@@ -275,10 +313,5 @@ namespace Velocity.ViewModels
                 }
             };
         }
-    }
-
-    public class DefQBank()
-    {
-        string apple = "";
     }
 }
