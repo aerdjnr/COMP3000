@@ -23,5 +23,11 @@ namespace Velocity.ViewModels
         {
             _main.DefCLI();
         }
+
+        [RelayCommand]
+        private void GoBack()
+        {
+            _main.NavHome();
+        }
     }
 }

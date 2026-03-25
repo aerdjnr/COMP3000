@@ -11,11 +11,12 @@ namespace Velocity.ViewModels
 {
     public partial class DefCLIViewModel : ViewModelBase
     {
-        public DefCLIViewModel()
+        private readonly MainWindowViewModel _main;
+        public DefCLIViewModel(MainWindowViewModel main)
         {
             DefQBank();
+            _main = main;
         }
-
         private readonly DefCommands _givenCommand = new();
         private string _commandInput = string.Empty;
         public ObservableCollection<string> OutputLines { get; } = new();
@@ -26,7 +27,9 @@ namespace Velocity.ViewModels
             set => SetProperty(ref _commandInput, value);
         }
 
-
+        public string[] q1a1;
+        public string[] q2a2;
+        public string[] q3a3;
 
 
         [ObservableProperty]
@@ -34,13 +37,18 @@ namespace Velocity.ViewModels
 
         [ObservableProperty]
         string _Q1;
+        [ObservableProperty]
+        string _Q1a;
         
         [ObservableProperty]
         string _Q2;
-        
+        [ObservableProperty]
+        string _Q2a;
+
         [ObservableProperty]
         string _Q3;
-
+        [ObservableProperty]
+        string _Q3a;
 
         [RelayCommand]
         private void Execute() 
@@ -64,23 +72,32 @@ namespace Velocity.ViewModels
             MenuState = !MenuState;
         }
 
+        [RelayCommand]
+        private void GoBack()
+        {
+            _main.NavTut();
+        }
         public void DefQBank()
         {
-            Dictionary<int, string> Q_bank = new Dictionary<int, string>()
+            Dictionary<string, string> Q_bank = new Dictionary<string, string>()
             {
-                {1,"Sample question1?"},
-                {2,"Sample question2?"},
-                {3,"Sample question3?"},
-                {4,"Sample question4?"},
-                {5,"Sample question5?"},
-                {6,"Sample question6?"},
-                {7,"Sample question7?"},
+                {"Is the firewall up?","null"},
+                {"what is the command to turn the firewall off?","fw disable"},
+                {"Sample question3?","answer3"},
+                {"Sample question4?","answer4"},
+                {"Sample question5?","answer5"},
+                {"Sample question6?","answer6"},
+                {"Sample question7?","answer7"},
             };
 
             Random rand = new Random();
-            Q1 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Value;
-            Q2 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Value;
-            Q3 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Value;
+            Q1 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
+            Q2 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
+            Q3 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
+            
+            Q1a = Q_bank[Q1];
+            Q2a = Q_bank[Q2];
+            Q3a = Q_bank[Q3];
         }
     }
 

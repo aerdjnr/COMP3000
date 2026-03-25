@@ -7,6 +7,11 @@ namespace Velocity.ViewModels
 {
     public partial class VelCLIViewModel : ViewModelBase
     {
+        private readonly MainWindowViewModel _main;
+        public VelCLIViewModel(MainWindowViewModel main)
+        {
+            _main = main;
+        }
         private readonly VelCommands _givenCommand = new();
         private string _commandInput = string.Empty;
         public ObservableCollection<string> OutputLines { get; } = new();
@@ -31,6 +36,12 @@ namespace Velocity.ViewModels
                 OutputLines.Add(line);
             }
             CommandInput = string.Empty;
+        }
+
+        [RelayCommand]
+        private void GoBack()
+        {
+            _main.NavTut();
         }
     }
     public class VelCommands
