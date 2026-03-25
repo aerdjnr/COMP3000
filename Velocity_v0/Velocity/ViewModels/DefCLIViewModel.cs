@@ -11,12 +11,17 @@ namespace Velocity.ViewModels
 {
     public partial class DefCLIViewModel : ViewModelBase
     {
+        public override double? SetWidth => 800;
+        public override double? SetHeight => 575;
+
         private readonly MainWindowViewModel _main;
         public DefCLIViewModel(MainWindowViewModel main)
         {
-            DefQBank();
             _main = main;
+            DefQBank();
         }
+        public string[] fw_rule_list = ["To    Action    From"];
+
         private readonly DefCommands _givenCommand = new();
         private string _commandInput = string.Empty;
         public ObservableCollection<string> OutputLines { get; } = new();
@@ -33,7 +38,7 @@ namespace Velocity.ViewModels
 
 
         [ObservableProperty]
-        private bool _MenuState = true;
+        private bool _MenuState = false;
 
         [ObservableProperty]
         string _Q1;
@@ -81,12 +86,12 @@ namespace Velocity.ViewModels
         {
             Dictionary<string, string> Q_bank = new Dictionary<string, string>()
             {
-                {"Is the firewall up?","null"},
+                {"Is the firewall up?",string.Empty},
                 {"what is the command to turn the firewall off?","fw disable"},
-                {"Sample question3?","answer3"},
-                {"Sample question4?","answer4"},
-                {"Sample question5?","answer5"},
-                {"Sample question6?","answer6"},
+                {"Enable at least 2 services",string.Empty},
+                {"Ensure only the 'ApiService' is running",string.Empty},
+                {"Add a firewall rule",string.Empty},
+                {"How do I check the currently enabled/running services?","answer6"},
                 {"Sample question7?","answer7"},
             };
 
@@ -260,7 +265,8 @@ namespace Velocity.ViewModels
                             return fw_rule_list;
 
                         case "add":
-                            return fw_rule_list.Append(fw_rule);
+                            fw_rule_list = fw_rule_list.Append(fw_rule).ToArray();
+                            return new[] { "Rule added" };
 
                         case "remove":
                             fw_rule_list = new string[] { fw_rule_list[0] };
@@ -281,13 +287,18 @@ namespace Velocity.ViewModels
                         switch (cd_ext[2])
                         {
                             case "webservice":
-                                return service_list.Append(webService);
+                                service_list = service_list.Append(webService).ToArray();
+                                return service_list;
                         
                             case "dataservice":
-                                return service_list.Append(dataService); 
-                        
+                                service_list = service_list.Append(dataService).ToArray();
+                                return service_list;
+
+
                             case "apiservice":
-                                return service_list.Append(apiService);
+                                service_list = service_list.Append(apiService).ToArray();
+                                return service_list;
+
 
                             default:
                                 return new[] 

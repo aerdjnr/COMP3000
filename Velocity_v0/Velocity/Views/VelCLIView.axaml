@@ -1,4 +1,4 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Velocity.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,34 +7,106 @@
              x:Class="Velocity.Views.VelCLIView"
              x:DataType="vm:VelCLIViewModel">
     
-    <DockPanel LastChildFill="True">
-        <TextBox DockPanel.Dock="Top" 
-            BorderThickness="0"
-            Background="Transparent"
-            FocusAdorner="{x:Null}"
-            BorderBrush="Transparent"
-            TextWrapping="Wrap"
-            Text="This is a tutorial of the tutorials! Each button opens a trial version of the real labs so you can get a basic understanding (or a warm up) before the lab! To get started, type 'help' to get a list of available commands you can use."/>
+    <SplitView IsPaneOpen="{Binding MenuState}"
+                DisplayMode="Overlay"
+                OpenPaneLength="400">
+
+        <!--Inside Pane Content-->
+        <SplitView.Pane>
+            <StackPanel>
+                <Button Content="☰"
+                        Command="{Binding MenuToggleCommand}"/>
+                <Button Content="Back"
+                        Margin="0,5,0,0"
+                        Command="{Binding GoBackCommand}"/>
+                <StackPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+							
+                            <TextBlock
+                                Padding="0,20,0,50"
+                                Grid.Row="0"
+                                TextWrapping="Wrap">
+                                Lorem ipsum dolor sit amet, 
+                                consectetur adipiscing elit, 
+                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                Ut enim ad minim veniam, 
+                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </TextBlock>
+     
+                            <TextBlock
+                                Grid.Row="1" Text="aaa"></TextBlock> 
+                            <TextBox Grid.Row="2" Watermark="Answer"/>
+                            <Button 
+                                Grid.Row="3"
+                                Margin="0,0,0,20">
+                                Check</Button>
+
+                            <TextBlock
+                                Grid.Row="4" Text="aaa"></TextBlock>
+                            <TextBox Grid.Row="5" Watermark="Answer"/>
+                            <Button 
+                                Grid.Row="6"
+                                Margin="0,0,0,20">
+                                Check</Button>
+
+                            <TextBlock
+                                Grid.Row="7" Text="aaa"></TextBlock>
+                            <TextBox Grid.Row="8" Watermark="Answer"/>
+                            <Button 
+                                Grid.Row="9"
+                                Margin="0,0,0,20">
+                                Check</Button>
+
+                        </Grid>
+                    </ScrollViewer>
+                </StackPanel>
+            </StackPanel>
+        </SplitView.Pane>
+
+        <!--Menu button and CLI-->
+        <SplitView.Content>
+            <Grid RowDefinitions="Auto,*">
+				<Button Content="☰"
+                        Command="{Binding MenuToggleCommand}"
+                        Grid.Row="0"
+                        VerticalAlignment="Top">
+                </Button>
+
+                <DockPanel Grid.Row="1" LastChildFill="True">
+                    <TextBox DockPanel.Dock="Top" 
+                        BorderThickness="0"
+                        Background="Transparent"
+                        FocusAdorner="{x:Null}"
+                        BorderBrush="Transparent"
+                        TextWrapping="Wrap"
+                        IsReadOnly="True"
+                        Text="This is a tutorial of the tutorials! Each button opens a trial version of the real labs so you can get a basic understanding (or a warm up) before the lab! To get started, type 'help' to get a list of available commands you can use.">
+                    </TextBox>
 		
-        <TextBox DockPanel.Dock="Bottom"
-            Text="{Binding CommandInput, UpdateSourceTrigger=PropertyChanged}"
-            FontFamily="Consolas"
-            KeyDown="PressEnter"
-            Watermark="Type here:">
-        </TextBox>
+                    <TextBox DockPanel.Dock="Bottom"
+                        Text="{Binding CommandInput, UpdateSourceTrigger=PropertyChanged}"
+                        FontFamily="Consolas"
+                        KeyDown="PressEnter"
+                        Watermark="Type here:">
+                    </TextBox>
         
-        <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding OutputLines}">
-                <ItemsControl.ItemTemplate>
-					<DataTemplate>
-					    <TextBlock Text="{Binding}"
-                            FontFamily="Consolas"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                    <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding OutputLines}">
+                            <ItemsControl.ItemTemplate>
+					            <DataTemplate>
+					                <TextBlock Text="{Binding}"
+                                        FontFamily="Consolas"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
 				
-            </ItemsControl>
-        </ScrollViewer>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DockPanel>
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
 
-
-    </DockPanel>
 </UserControl>

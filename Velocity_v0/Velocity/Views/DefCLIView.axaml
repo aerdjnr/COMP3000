@@ -15,16 +15,17 @@
         <SplitView.Pane>
             <StackPanel>
                 <Button Content="☰"
-                        Command="{Binding MenuToggleCommand}"/>
+                        Command="{Binding MenuToggleCommand}"
+                        Margin="10,5,0,0"/>
                 <Button Content="Back"
-                        Margin="0,5,0,0"
+                        Margin="10,5,0,0"
                         Command="{Binding GoBackCommand}"/>
                 <StackPanel>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 							
                             <TextBlock
-                                Padding="0,20,0,50"
+                                Padding="10,20,0,50"
                                 Grid.Row="0"
                                 TextWrapping="Wrap">
                                 Lorem ipsum dolor sit amet, 
@@ -37,27 +38,41 @@
                             </TextBlock>
      
                             <TextBlock
-                                Grid.Row="1" Text="{Binding Q1}"></TextBlock> 
-                            <TextBox Grid.Row="2" Watermark="Answer"/>
+                                Grid.Row="1" 
+                                Text="{Binding Q1}" 
+                                Padding="10,0,10,0"/>
+                            <TextBox 
+                                Grid.Row="2" 
+                                Watermark="Answer"
+                                Margin="10,0,10,0"/>
                             <Button 
                                 Grid.Row="3"
-                                Margin="0,0,0,20">
+                                Margin="10,0,0,20">
                                 Check</Button>
 
                             <TextBlock
-                                Grid.Row="4" Text="{Binding Q2}"></TextBlock>
-                            <TextBox Grid.Row="5" Watermark="Answer"/>
+                                Grid.Row="4" 
+                                Text="{Binding Q2}"
+                                Padding="10,0,10,0"/>
+                            <TextBox 
+                                Grid.Row="5" 
+                                Watermark="Answer"
+                                Margin="10,0,10,0"/>
                             <Button 
                                 Grid.Row="6"
-                                Margin="0,0,0,20">
+                                Margin="10,0,0,20">
                                 Check</Button>
 
                             <TextBlock
-                                Grid.Row="7" Text="{Binding Q3}"></TextBlock>
-                            <TextBox Grid.Row="8" Watermark="Answer"/>
+                                Grid.Row="7" Text="{Binding Q3}"
+                                Padding="10,0,10,0"/>
+                            <TextBox 
+                                Grid.Row="8" 
+                                Watermark="Answer"
+                                Margin="10,0,10,0"/>
                             <Button 
                                 Grid.Row="9"
-                                Margin="0,0,0,20">
+                                Margin="10,0,0,20">
                                 Check</Button>
 
                         </Grid>

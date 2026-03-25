@@ -7,7 +7,18 @@
         x:Class="Velocity.Views.TutView"
         x:DataType="vm:TutViewModel">
     
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+          ColumnDefinitions="Auto,1">
+        <Button Content="Back"
+            FontSize="14"
+            Width="75"
+            Height="30"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            Margin="5,5,150,0"
+            Grid.Row="0"
+            Grid.Column="0"
+            Command="{Binding GoBackCommand}"/>
 
         <Button Content="Velocity"
             FontSize="16"
@@ -16,20 +27,11 @@
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             HorizontalAlignment="Center"
-            Margin="200,0,0,0"
+            Margin="0,50,200,0"
             Grid.Row="1"
+            Grid.Column="1"
             Command="{Binding OpenVelocityCommand}"/>
         
-        <Button Content="Offense"
-            FontSize="16"
-            Width="125"
-            Height="50"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            HorizontalAlignment="Center"
-            Margin="0,0,200,0"
-            Grid.Row="0"/>
-
         <Button Content="Defense"
             FontSize="16"
             Width="125"
@@ -37,9 +39,22 @@
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             HorizontalAlignment="Center"
-            Margin="0,0,200,0"
+            Margin="200,50,0,0"
             Grid.Row="1"
+            Grid.Column="1"
             Command="{Binding OpenDefenseCommand}"/>
+
+        <Button Content="Offense"
+            FontSize="16"
+            Width="125"
+            Height="50"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            HorizontalAlignment="Center"
+            Margin="0,50,200,0"
+            Grid.Row="2"
+            Grid.Column="1"/>
+
 
         <Button Content="Information"
             FontSize="16"
@@ -48,8 +63,9 @@
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             HorizontalAlignment="Center"
-            Margin="0,0,200,0"
-            Grid.Row="0"/>
+            Margin="200,50,0,0"
+            Grid.Row="2"
+            Grid.Column="1"/>
 
     </Grid>
     

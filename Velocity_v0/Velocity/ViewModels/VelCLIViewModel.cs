@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -7,20 +8,25 @@ namespace Velocity.ViewModels
 {
     public partial class VelCLIViewModel : ViewModelBase
     {
+        public override double? SetWidth => 800;
+        public override double? SetHeight => 575;
+
         private readonly MainWindowViewModel _main;
         public VelCLIViewModel(MainWindowViewModel main)
         {
             _main = main;
         }
+
         private readonly VelCommands _givenCommand = new();
-        private string _commandInput = string.Empty;
+        
         public ObservableCollection<string> OutputLines { get; } = new();
 
-        public string CommandInput 
-        { 
-            get => _commandInput;
-            set => SetProperty(ref _commandInput, value);
-        }
+
+        [ObservableProperty]
+        string _CommandInput;
+        
+        [ObservableProperty]
+        private bool _MenuState = true;
 
         [RelayCommand]
         private void Execute() 
@@ -36,6 +42,12 @@ namespace Velocity.ViewModels
                 OutputLines.Add(line);
             }
             CommandInput = string.Empty;
+        }
+
+        [RelayCommand]
+        private void MenuToggle()
+        {
+            MenuState = !MenuState;
         }
 
         [RelayCommand]
