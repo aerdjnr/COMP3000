@@ -6,10 +6,12 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Velocity.Views.DefCLIView"
              x:DataType="vm:DefCLIViewModel">
-
+    <UserControl.Styles>
+    
+    </UserControl.Styles>
     <SplitView IsPaneOpen="{Binding MenuState}"
                 DisplayMode="Overlay"
-                OpenPaneLength="400">
+                OpenPaneLength="350">
 
         <!--Inside Pane Content-->
         <SplitView.Pane>
@@ -25,7 +27,7 @@
                         <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 							
                             <TextBlock
-                                Padding="10,20,0,50"
+                                Padding="10,20,0,30"
                                 Grid.Row="0"
                                 TextWrapping="Wrap">
                                 Lorem ipsum dolor sit amet, 
@@ -38,8 +40,8 @@
                             </TextBlock>
      
                             <TextBlock
-                                Grid.Row="1" 
-                                Text="{Binding Q1}" 
+                                Grid.Row="1"
+                                Text="{Binding Q1}"
                                 Padding="10,0,10,0"/>
                             <TextBox 
                                 Grid.Row="2" 
@@ -47,7 +49,7 @@
                                 Margin="10,0,10,0"/>
                             <Button 
                                 Grid.Row="3"
-                                Margin="10,0,0,20">
+                                Margin="10,5,0,20">
                                 Check</Button>
 
                             <TextBlock
@@ -60,7 +62,7 @@
                                 Margin="10,0,10,0"/>
                             <Button 
                                 Grid.Row="6"
-                                Margin="10,0,0,20">
+                                Margin="10,5,0,20">
                                 Check</Button>
 
                             <TextBlock
@@ -72,7 +74,7 @@
                                 Margin="10,0,10,0"/>
                             <Button 
                                 Grid.Row="9"
-                                Margin="10,0,0,20">
+                                Margin="10,5,0,20">
                                 Check</Button>
 
                         </Grid>
@@ -98,7 +100,7 @@
                         BorderBrush="Transparent"
                         TextWrapping="Wrap"
                         IsReadOnly="True"
-                        Text="This is the defense lab. To begin, we'll be looking at hardening a Linux device, type 'help' for the available commands">
+                        Text="Type 'help' to get started with the CLI, for context and questions, click the ☰ button in the top left.">
                     </TextBox>
 		
                     <TextBox DockPanel.Dock="Bottom"
@@ -109,7 +111,8 @@
                     </TextBox>
         
                     <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding OutputLines}">
+                        <ItemsControl ItemsSource="{Binding OutputLines}"
+                                      Padding="10,10,0,0">
                             <ItemsControl.ItemTemplate>
 					            <DataTemplate>
 					                <TextBlock Text="{Binding}"

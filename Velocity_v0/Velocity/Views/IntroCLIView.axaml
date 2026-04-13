@@ -4,8 +4,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Velocity.Views.VelCLIView"
-             x:DataType="vm:VelCLIViewModel">
+             x:Class="Velocity.Views.IntroCLIView"
+             x:DataType="vm:IntroCLIViewModel">
     
     <SplitView IsPaneOpen="{Binding MenuState}"
                 DisplayMode="Overlay"
@@ -83,7 +83,7 @@
                         BorderBrush="Transparent"
                         TextWrapping="Wrap"
                         IsReadOnly="True"
-                        Text="This is a tutorial of the tutorials! Each button opens a trial version of the real labs so you can get a basic understanding (or a warm up) before the lab! To get started, type 'help' to get a list of available commands you can use.">
+                        Text="This is a tutorial of the tutorials! Each button opens a trial version of the real labs so you can get a basic understanding (or a warm up) before the lab! To get started, type 'help' to get a list of available commands you can use. For further context, click the '☰' button in the top left.">
                     </TextBox>
 		
                     <TextBox DockPanel.Dock="Bottom"
@@ -94,7 +94,8 @@
                     </TextBox>
         
                     <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding OutputLines}">
+                        <ItemsControl ItemsSource="{Binding OutputLines}"
+                                      Padding="10,10,0,0">
                             <ItemsControl.ItemTemplate>
 					            <DataTemplate>
 					                <TextBlock Text="{Binding}"

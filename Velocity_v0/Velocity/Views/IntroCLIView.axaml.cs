@@ -7,16 +7,16 @@ using Velocity.ViewModels;
 
 namespace Velocity.Views
 {
-    public partial class VelCLIView : UserControl
+    public partial class IntroCLIView : UserControl
     {
-        public VelCLIView()
+        public IntroCLIView()
         {
             InitializeComponent();
         }
 
         private void PressEnter(object? sender, KeyEventArgs e)
         {
-            if (DataContext is not VelCLIViewModel vm)
+            if (DataContext is not IntroCLIViewModel vm)
                 return;
             switch (e.Key)
             {

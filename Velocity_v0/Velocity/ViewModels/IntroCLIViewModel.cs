@@ -6,18 +6,18 @@ using System.Collections.ObjectModel;
 
 namespace Velocity.ViewModels
 {
-    public partial class VelCLIViewModel : ViewModelBase
+    public partial class IntroCLIViewModel : ViewModelBase
     {
         public override double? SetWidth => 800;
         public override double? SetHeight => 575;
 
         private readonly MainWindowViewModel _main;
-        public VelCLIViewModel(MainWindowViewModel main)
+        public IntroCLIViewModel(MainWindowViewModel main)
         {
             _main = main;
         }
 
-        private readonly VelCommands _givenCommand = new();
+        private readonly IntroCommands _givenCommand = new();
         
         public ObservableCollection<string> OutputLines { get; } = new();
 
@@ -26,7 +26,7 @@ namespace Velocity.ViewModels
         string _CommandInput;
         
         [ObservableProperty]
-        private bool _MenuState = true;
+        private bool _MenuState = false;
 
         [RelayCommand]
         private void Execute() 
@@ -35,7 +35,7 @@ namespace Velocity.ViewModels
             {
                 return;
             }
-            string userInput = "User@Tutorial> " + CommandInput;
+            string userInput = "User@Introduction> " + CommandInput;
             OutputLines.Add(userInput);
             foreach (var line in _givenCommand.Process(CommandInput))
             { 
@@ -56,7 +56,7 @@ namespace Velocity.ViewModels
             _main.NavTut();
         }
     }
-    public class VelCommands
+    public class IntroCommands
     {
         bool state = false;
 
@@ -77,16 +77,16 @@ namespace Velocity.ViewModels
                         "this is so you can understand what the lab is about and what commmands are used within.",
                         "Here is what a typical 'help' command will look like:\n",
                         "Commands:",
-                        "Command1 - Description",
-                        "Command2 - Description",
+                        "    command1 [ options ] - Description",
+                        "    command2 [ options ] - Description",
                         "\nGo ahead and run 'command1'",
                     },
                     "command1" => new[]
                     {
                         "Good! In most cases, it isn't just 'command1' and you're done, there are typically options like below:\n",
                         "Options:",
-                        "option1 - this will perform an action",
-                        "option2 - this will perform a different action\n",
+                        "    option1 - this will perform an action",
+                        "    option2 - this will perform a different action\n",
                         "I promise the descriptions are much more helpful in the other labs!",
                         "For now, have a look around and try out different commands and options.",
                     },
@@ -94,9 +94,9 @@ namespace Velocity.ViewModels
                     {
                         "Good! Curiosity is key to good learning.\n",
                         "Options:",
-                        "option1 - return the state of 'security procedures'",
-                        "up - change the state to 'on'",
-                        "down - change the state to 'off'",
+                        "    state - return the state of 'security procedures'",
+                        "    up - change the state to 'on'",
+                        "    down - change the state to 'off'",
                     },
                     "easteregg" => new[]
                     {
@@ -110,7 +110,7 @@ namespace Velocity.ViewModels
             }
             if (cd_ext.Length==2)
             {
-                if (cd_ext[1] == "command1")
+                if (cd_ext[0] == "command1")
                 {
                     switch (cd_ext[1])
                     {
@@ -129,7 +129,7 @@ namespace Velocity.ViewModels
                     }
                 }
 
-                if (cd_ext[1] == "command2")
+                if (cd_ext[0] == "command2")
                 {
                     switch (cd_ext[1])
                     {

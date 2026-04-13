@@ -20,22 +20,20 @@ namespace Velocity.ViewModels
             _main = main;
             DefQBank();
         }
-        public string[] fw_rule_list = ["To    Action    From"];
+
 
         private readonly DefCommands _givenCommand = new();
-        private string _commandInput = string.Empty;
+        
         public ObservableCollection<string> OutputLines { get; } = new();
 
-        public string CommandInput 
-        { 
-            get => _commandInput;
-            set => SetProperty(ref _commandInput, value);
-        }
 
+        public string[] fw_rule_list = ["To    Action    From"];
         public string[] q1a1;
         public string[] q2a2;
         public string[] q3a3;
 
+        [ObservableProperty]
+        string _CommandInput;
 
         [ObservableProperty]
         private bool _MenuState = false;
@@ -55,6 +53,10 @@ namespace Velocity.ViewModels
         [ObservableProperty]
         string _Q3a;
 
+        [ObservableProperty]
+        bool _IsAnswer;
+
+
         [RelayCommand]
         private void Execute() 
         { 
@@ -62,7 +64,7 @@ namespace Velocity.ViewModels
             {
                 return;
             }
-            string userInput = "> " + CommandInput;
+            string userInput = "User@Defense> " + CommandInput;
             OutputLines.Add(userInput);
             foreach (var line in _givenCommand.Process(CommandInput))
             { 
@@ -84,15 +86,15 @@ namespace Velocity.ViewModels
         }
         public void DefQBank()
         {
-            Dictionary<string, string> Q_bank = new Dictionary<string, string>()
+            Dictionary<string, Func<string>> Q_bank = new Dictionary<string, Func<string>>()
             {
-                {"Is the firewall up?",string.Empty},
-                {"what is the command to turn the firewall off?","fw disable"},
-                {"Enable at least 2 services",string.Empty},
-                {"Ensure only the 'ApiService' is running",string.Empty},
-                {"Add a firewall rule",string.Empty},
-                {"How do I check the currently enabled/running services?","answer6"},
-                {"Sample question7?","answer7"},
+                {"Is the firewall up?", () => string.Empty},
+                {"what is the command to turn the firewall off?", () => "fw disable"},
+                {"Enable at least 2 services",() =>string.Empty},
+                {"Ensure only the 'ApiService' is running",() =>string.Empty},
+                {"Add a firewall rule",() =>string.Empty},
+                {"How do I check the currently enabled/running services?",() =>"service show"},
+                {"Sample question7?",() =>"answer7"},
             };
 
             Random rand = new Random();
@@ -100,9 +102,9 @@ namespace Velocity.ViewModels
             Q2 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
             Q3 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
             
-            Q1a = Q_bank[Q1];
-            Q2a = Q_bank[Q2];
-            Q3a = Q_bank[Q3];
+            Q1a = Q_bank[Q1].ToString();
+            Q2a = Q_bank[Q2].ToString();
+            Q3a = Q_bank[Q3].ToString();
         }
     }
 
@@ -131,24 +133,24 @@ namespace Velocity.ViewModels
                 {
                     "help" => new[]
                     {
-                        "Enter the command to list available options",
                         "Commands:",
-                        "fw - Configure the device's firewall",
-                        "service - configure services",
+                        "    fw          [ status | enable | disable | rule ] - Configure the device's firewall",
+                        "    service     [ show | start | stop ] - configure services",
                     },
                     "fw" => new[]
                     {
-                        "Options:",
-                        "status - displays firewall state",
-                        "enable - turns on the firewall",
-                        "disable - turns off the firewall",
-                        "rule - configure firewall rules",
+                        "fw options:",
+                        "    status - displays firewall state",
+                        "    enable - turns on the firewall",
+                        "    disable - turns off the firewall",
+                        "    rule - configure firewall rules",
                     },
                     "service" => new[]
                     {
-                        "show - list currently running services",
-                        "start - initiates a service",
-                        "stop - halts a service"
+                        "service options:",
+                        "    show - list currently running services",
+                        "    start - initiates a service",
+                        "    stop - halts a service"
                     },
                     _ => new[]
                     {
@@ -185,9 +187,10 @@ namespace Velocity.ViewModels
                         case "rule":
                             return new[] 
                             { 
-                                "show - lists currently enabled rules",
-                                "add - inserts a given rule",
-                                "remove - delete a given rule"
+                                "fw rule [option]",
+                                "        show - lists currently enabled rules",
+                                "        add - inserts a sample rule",
+                                "        remove - delete a sample rule"
                             };
 
                         default:
@@ -216,18 +219,18 @@ namespace Velocity.ViewModels
                             return new[]
                             {
                                 "Here is a list of example services to start:",
-                                "WebService",
-                                "DataService",
-                                "ApiService",
+                                "    WebService",
+                                "    DataService",
+                                "    ApiService",
                             };
 
                         case "stop":
                             return new[]
                             {
                                 "Here is a list of example services to stop:",
-                                "WebService",
-                                "DataService",
-                                "ApiService",
+                                "    WebService",
+                                "    DataService",
+                                "    ApiService",
                             };
 
                         default:
@@ -248,7 +251,7 @@ namespace Velocity.ViewModels
             }
 
             // Command + Option + Object
-            if (cd_ext.Length == 3)
+            if (cd_ext.Length >= 3)
             {
                 if (cd_ext[0] == "fw")
                 {
@@ -266,11 +269,11 @@ namespace Velocity.ViewModels
 
                         case "add":
                             fw_rule_list = fw_rule_list.Append(fw_rule).ToArray();
-                            return new[] { "Rule added" };
+                            return new[] { "Sample rule added, go and take a look!" };
 
                         case "remove":
                             fw_rule_list = new string[] { fw_rule_list[0] };
-                            return fw_rule_list;
+                            return new[] { "Sample rule removed, go and take a look!" };
 
                         default:
                             return new[]

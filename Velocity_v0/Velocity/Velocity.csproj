@@ -43,8 +43,8 @@
     <Compile Update="Views\DefCLIView.axaml.cs">
       <DependentUpon>DefCLIView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\VelCLIView.axaml.cs">
-      <DependentUpon>VelCLIView.axaml</DependentUpon>
+    <Compile Update="Views\IntroCLIView.axaml.cs">
+      <DependentUpon>IntroCLIView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
