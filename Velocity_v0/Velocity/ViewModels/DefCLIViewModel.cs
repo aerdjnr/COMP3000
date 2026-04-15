@@ -60,22 +60,25 @@ namespace Velocity.ViewModels
         [ObservableProperty]
         bool _HasInput3;
 
+        [ObservableProperty]
+        string _UserAnswer;
+
         [RelayCommand]
         public void Checker1()
         {
-            Checker_Assign(Q1);
+            Checker_Assign(Q1).Invoke();
         }
 
         [RelayCommand]
         public void Checker2()
         {
-            Checker_Assign(Q2);
+            Checker_Assign(Q2).Invoke();
         }
 
         [RelayCommand]
         public void Checker3()
         {
-            Checker_Assign(Q3);
+            Checker_Assign(Q3).Invoke();
         }
 
         [RelayCommand]
@@ -106,7 +109,36 @@ namespace Velocity.ViewModels
             _main.NavTut();
         }
 
-         
+
+        public bool Answer_Check()
+        {
+            string In_Q1 = "what is the command to turn the firewall off?";
+            string In_Q2 = "How do I check the currently enabled/running services?";
+            string In_Q3 = "What is the port shown in the sample rule?";
+            bool logic(string a, string b, string c)
+            {
+                if (Q1 == a || Q2 == b || Q3 == c)
+                {
+                    return true;
+                }
+                return false;
+            }
+            switch (UserAnswer)
+            {
+                case "fw disable":
+                    Debug.WriteLine("this should be correct");
+                    return logic (In_Q1,In_Q2, In_Q3);
+                case "service show":
+                    Debug.WriteLine("this should be correct");
+                    return logic(In_Q1, In_Q2, In_Q3);
+                case "22":
+                    Debug.WriteLine("this should be correct");
+                    return logic(In_Q1, In_Q2, In_Q3);
+                default:
+                    Debug.WriteLine("Not a question with an input box?");
+                    return false;
+            }
+        }
         public bool FW_Up()
         {
             Debug.WriteLine("Code executed");
@@ -165,9 +197,8 @@ namespace Velocity.ViewModels
                 "Is the firewall up?" => FW_Up,
                 "Enable at least 2 services" => Two_Services,
                 "Ensure only the 'ApiService' is running" => Only_API,
-                "Add a firewall rule" => One_Rule
-
-
+                "Add a firewall rule" => One_Rule,
+                _ => Answer_Check
             };
         }
         public (string, bool) Q_Gen(Dictionary<string,string> bank, string question,string answer, bool InputShown)
