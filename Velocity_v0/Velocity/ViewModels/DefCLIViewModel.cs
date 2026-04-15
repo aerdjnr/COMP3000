@@ -45,6 +45,8 @@ namespace Velocity.ViewModels
         string _Q1a;
         [ObservableProperty]
         bool _HasInput1;
+        [ObservableProperty]
+        string _UserAnswer1;
         
         [ObservableProperty]
         string _Q2;
@@ -52,6 +54,8 @@ namespace Velocity.ViewModels
         string _Q2a;
         [ObservableProperty]
         bool _HasInput2;
+        [ObservableProperty]
+        string _UserAnswer2;
 
         [ObservableProperty]
         string _Q3;
@@ -59,9 +63,9 @@ namespace Velocity.ViewModels
         string _Q3a;
         [ObservableProperty]
         bool _HasInput3;
-
         [ObservableProperty]
-        string _UserAnswer;
+        string _UserAnswer3;
+
 
         [RelayCommand]
         public void Checker1()
@@ -124,18 +128,37 @@ namespace Velocity.ViewModels
                 }
                 return false;
             }
-            switch (UserAnswer)
+            bool Ans_Input(string userInput)
             {
-                case "fw disable":
-                    return logic (Q1,Q2,Q3,In_Q1);
-                case "service show":
-                    return logic(Q1, Q2, Q3,In_Q2);
-                case "22":
-                    return logic(Q1, Q2, Q3, In_Q3);
-                default:
-                    Debug.WriteLine("answer was incorrect");
-                    return false;
+                switch (userInput)
+                {
+                    case "fw disable":
+                        return logic(Q1, Q2, Q3, In_Q1);
+                    case "service show":
+                        return logic(Q1, Q2, Q3, In_Q2);
+                    case "22":
+                        return logic(Q1, Q2, Q3, In_Q3);
+                    default:
+                        Debug.WriteLine("answer was incorrect");
+                        return false;
+                }
             }
+            Ans_Input(UserAnswer1);
+            Ans_Input(UserAnswer2);
+            Ans_Input(UserAnswer3);
+            return false;
+            //switch (UserAnswer)
+            //{
+            //    case "fw disable":
+            //        return logic (Q1,Q2,Q3,In_Q1);
+            //    case "service show":
+            //        return logic(Q1, Q2, Q3,In_Q2);
+            //    case "22":
+            //        return logic(Q1, Q2, Q3, In_Q3);
+            //    default:
+            //        Debug.WriteLine("answer was incorrect");
+            //        return false;
+            //}
         }
         public bool FW_Up()
         {
@@ -146,6 +169,7 @@ namespace Velocity.ViewModels
             {
                 return true;
             }
+            Debug.WriteLine("You didnt do it");
             return false;
         }
 

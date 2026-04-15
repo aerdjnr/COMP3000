@@ -47,7 +47,7 @@
                                 Grid.Row="2" 
                                 Watermark="Answer"
                                 Margin="10,0,10,0"
-                                Text="{Binding UserAnswer, Mode=TwoWay}"
+                                Text="{Binding UserAnswer1, Mode=TwoWay}"
                                 IsVisible="{Binding HasInput1}"/>
                             <Button 
                                 Grid.Row="3"
@@ -63,7 +63,7 @@
                                 Grid.Row="5" 
                                 Watermark="Answer"
                                 Margin="10,0,10,0"
-                                Text="{Binding UserAnswer, Mode=TwoWay}"
+                                Text="{Binding UserAnswer2, Mode=TwoWay}"
                                 IsVisible="{Binding HasInput2}"/>
                             <Button 
                                 Grid.Row="6"
@@ -78,7 +78,7 @@
                                 Grid.Row="8" 
                                 Watermark="Answer"
                                 Margin="10,0,10,0"
-                                Text="{Binding UserAnswer, Mode=TwoWay}"
+                                Text="{Binding UserAnswer3, Mode=TwoWay}"
                                 IsVisible="{Binding HasInput3}"/>
                             <Button 
                                 Grid.Row="9"
