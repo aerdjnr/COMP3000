@@ -115,10 +115,11 @@ namespace Velocity.ViewModels
             string In_Q1 = "what is the command to turn the firewall off?";
             string In_Q2 = "How do I check the currently enabled/running services?";
             string In_Q3 = "What is the port shown in the sample rule?";
-            bool logic(string a, string b, string c)
+            bool logic(string a, string b, string c, string selected)
             {
-                if (Q1 == a || Q2 == b || Q3 == c)
+                if (a == selected || b == selected || c == selected)
                 {
+                    Debug.WriteLine("answer should be correct");
                     return true;
                 }
                 return false;
@@ -126,16 +127,13 @@ namespace Velocity.ViewModels
             switch (UserAnswer)
             {
                 case "fw disable":
-                    Debug.WriteLine("this should be correct");
-                    return logic (In_Q1,In_Q2, In_Q3);
+                    return logic (Q1,Q2,Q3,In_Q1);
                 case "service show":
-                    Debug.WriteLine("this should be correct");
-                    return logic(In_Q1, In_Q2, In_Q3);
+                    return logic(Q1, Q2, Q3,In_Q2);
                 case "22":
-                    Debug.WriteLine("this should be correct");
-                    return logic(In_Q1, In_Q2, In_Q3);
+                    return logic(Q1, Q2, Q3, In_Q3);
                 default:
-                    Debug.WriteLine("Not a question with an input box?");
+                    Debug.WriteLine("answer was incorrect");
                     return false;
             }
         }
