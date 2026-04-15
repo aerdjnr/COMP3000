@@ -70,13 +70,23 @@ namespace Velocity.ViewModels
         [RelayCommand]
         public void Checker1()
         {
-            Checker_Assign(Q1).Invoke();
+            if (HasInput1 == true)
+            {
+                Debug.WriteLine(Q1a, UserAnswer1);
+                Answer_Check(Q1a, UserAnswer1);
+            }
+            else
+            {
+                Debug.WriteLine(Q1, HasInput1.ToString());
+                Checker_Assign(Q1).Invoke();
+            }
         }
 
         [RelayCommand]
         public void Checker2()
         {
             Checker_Assign(Q2).Invoke();
+            
         }
 
         [RelayCommand]
@@ -114,51 +124,13 @@ namespace Velocity.ViewModels
         }
 
 
-        public bool Answer_Check()
+        public bool Answer_Check(string answer, string userInput)
         {
-            string In_Q1 = "what is the command to turn the firewall off?";
-            string In_Q2 = "How do I check the currently enabled/running services?";
-            string In_Q3 = "What is the port shown in the sample rule?";
-            bool logic(string a, string b, string c, string selected)
+            if (userInput == answer)
             {
-                if (a == selected || b == selected || c == selected)
-                {
-                    Debug.WriteLine("answer should be correct");
-                    return true;
-                }
-                return false;
+                return true;
             }
-            bool Ans_Input(string userInput)
-            {
-                switch (userInput)
-                {
-                    case "fw disable":
-                        return logic(Q1, Q2, Q3, In_Q1);
-                    case "service show":
-                        return logic(Q1, Q2, Q3, In_Q2);
-                    case "22":
-                        return logic(Q1, Q2, Q3, In_Q3);
-                    default:
-                        Debug.WriteLine("answer was incorrect");
-                        return false;
-                }
-            }
-            Ans_Input(UserAnswer1);
-            Ans_Input(UserAnswer2);
-            Ans_Input(UserAnswer3);
             return false;
-            //switch (UserAnswer)
-            //{
-            //    case "fw disable":
-            //        return logic (Q1,Q2,Q3,In_Q1);
-            //    case "service show":
-            //        return logic(Q1, Q2, Q3,In_Q2);
-            //    case "22":
-            //        return logic(Q1, Q2, Q3, In_Q3);
-            //    default:
-            //        Debug.WriteLine("answer was incorrect");
-            //        return false;
-            //}
         }
         public bool FW_Up()
         {
@@ -220,7 +192,7 @@ namespace Velocity.ViewModels
                 "Enable at least 2 services" => Two_Services,
                 "Ensure only the 'ApiService' is running" => Only_API,
                 "Add a firewall rule" => One_Rule,
-                _ => Answer_Check
+                _ => () => false
             };
         }
         public (string, bool) Q_Gen(Dictionary<string,string> bank, string question,string answer, bool InputShown)
