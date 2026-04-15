@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 
@@ -26,7 +27,7 @@ namespace Velocity.ViewModels
         
         public ObservableCollection<string> OutputLines { get; } = new();
 
-
+        public string[] taken = ["", "", ""];
         public string[] fw_rule_list = ["To    Action    From"];
         public string[] q1a1;
         public string[] q2a2;
@@ -54,8 +55,11 @@ namespace Velocity.ViewModels
         string _Q3a;
 
         [ObservableProperty]
-        bool _IsAnswer;
-
+        bool _HasInput1;
+        [ObservableProperty]
+        bool _HasInput2;
+        [ObservableProperty]
+        bool _HasInput3;
 
         [RelayCommand]
         private void Execute() 
@@ -84,34 +88,63 @@ namespace Velocity.ViewModels
         {
             _main.NavTut();
         }
+
+        public (string, bool) TextBox_Gen(Dictionary<string,string> bank, string question,string answer, bool InputShown )
+        {
+            if (bank[question].ToString() == String.Empty)
+            {
+                InputShown = false;
+            }
+            else
+            {
+                InputShown = true;
+                answer = bank[question].ToString();
+            }
+            return (answer, InputShown);
+        }
+        public string fw_up()
+        {
+            HasInput1 = false;
+            DefCommands comm_access= new DefCommands();
+            bool fw_state = comm_access.fw_state;
+            if (fw_state==true)
+            {
+                return "correct";
+            }
+           
+            return "incorrect";
+        }
+
         public void DefQBank()
         {
-            Dictionary<string, Func<string>> Q_bank = new Dictionary<string, Func<string>>()
+            Dictionary<string,string> Q_bank = new Dictionary<string,string>()
             {
-                {"Is the firewall up?", () => string.Empty},
-                {"what is the command to turn the firewall off?", () => "fw disable"},
-                {"Enable at least 2 services",() =>string.Empty},
-                {"Ensure only the 'ApiService' is running",() =>string.Empty},
-                {"Add a firewall rule",() =>string.Empty},
-                {"How do I check the currently enabled/running services?",() =>"service show"},
-                {"Sample question7?",() =>"answer7"},
+                {"Is the firewall up?", String.Empty },
+                {"what is the command to turn the firewall off?","fw disable" },
+                {"Enable at least 2 services", String.Empty},
+                {"Ensure only the 'ApiService' is running",String.Empty},
+                {"Add a firewall rule",String.Empty},
+                {"How do I check the currently enabled/running services?","service show" },
+                {"What is the port shown in the sample rule?","22" },
             };
 
             Random rand = new Random();
             Q1 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
             Q2 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
             Q3 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
-            
-            Q1a = Q_bank[Q1].ToString();
-            Q2a = Q_bank[Q2].ToString();
-            Q3a = Q_bank[Q3].ToString();
+
+            (Q1a, HasInput1)  = TextBox_Gen(Q_bank, Q1, Q1a, HasInput1);
+            (Q2a, HasInput2) = TextBox_Gen(Q_bank, Q2, Q2a, HasInput2);
+            (Q3a, HasInput3) = TextBox_Gen(Q_bank, Q3, Q3a, HasInput3);            
+            Debug.WriteLine(Q1a);
+            Debug.WriteLine(HasInput3.ToString());
         }
     }
 
     public class DefCommands
     {
         // Command "fw" variables
-        bool fw_state = false;
+        public bool fw_state = false;
         string[] fw_rule_list = ["To    Action    From"];
         string fw_rule = "22/tcp    Allow   192.168.0.10";
 

@@ -46,7 +46,8 @@
                             <TextBox 
                                 Grid.Row="2" 
                                 Watermark="Answer"
-                                Margin="10,0,10,0"/>
+                                Margin="10,0,10,0"
+                                IsVisible="{Binding HasInput1}"/>
                             <Button 
                                 Grid.Row="3"
                                 Margin="10,5,0,20">
@@ -59,7 +60,8 @@
                             <TextBox 
                                 Grid.Row="5" 
                                 Watermark="Answer"
-                                Margin="10,0,10,0"/>
+                                Margin="10,0,10,0"
+                                IsVisible="{Binding HasInput2}"/>
                             <Button 
                                 Grid.Row="6"
                                 Margin="10,5,0,20">
@@ -71,7 +73,8 @@
                             <TextBox 
                                 Grid.Row="8" 
                                 Watermark="Answer"
-                                Margin="10,0,10,0"/>
+                                Margin="10,0,10,0"
+                                IsVisible="{Binding HasInput3}"/>
                             <Button 
                                 Grid.Row="9"
                                 Margin="10,5,0,20">
