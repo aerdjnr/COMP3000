@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 
 
@@ -62,13 +61,22 @@ namespace Velocity.ViewModels
         bool _HasInput3;
 
         [RelayCommand]
-        public void Checker1(){}
+        public void Checker1()
+        {
+            Checker_Assign(Q1);
+        }
 
         [RelayCommand]
-        public void Checker2(){}
+        public void Checker2()
+        {
+            Checker_Assign(Q2);
+        }
 
         [RelayCommand]
-        public void Checker3(){}
+        public void Checker3()
+        {
+            Checker_Assign(Q3);
+        }
 
         [RelayCommand]
         private void Execute() 
@@ -101,6 +109,7 @@ namespace Velocity.ViewModels
          
         public bool FW_Up()
         {
+            Debug.WriteLine("Code executed");
             DefCommands def = new DefCommands();
             bool fw_state = def.fw_state;
             if (fw_state==true)
@@ -112,6 +121,7 @@ namespace Velocity.ViewModels
 
         public bool Two_Services()
         {
+            Debug.WriteLine("Code executed");
             DefCommands def = new DefCommands();
             string[] services = def.service_list;
             if (services.Length >= 3)
@@ -123,6 +133,7 @@ namespace Velocity.ViewModels
 
         public bool Only_API()
         {
+            Debug.WriteLine("Code executed");
             DefCommands def = new DefCommands();
             string api = def.apiService;
             string[] services = def.service_list;
@@ -139,13 +150,26 @@ namespace Velocity.ViewModels
 
         public bool One_Rule()
         {
+            Debug.WriteLine("Code executed");
             if (fw_rule_list.Length == 2)
             {
                 return true;
             }
             return false;
         }
-        
+
+        public Func<bool> Checker_Assign(string question)
+        {
+            return question switch
+            {
+                "Is the firewall up?" => FW_Up,
+                "Enable at least 2 services" => Two_Services,
+                "Ensure only the 'ApiService' is running" => Only_API,
+                "Add a firewall rule" => One_Rule
+
+
+            };
+        }
         public (string, bool) Q_Gen(Dictionary<string,string> bank, string question,string answer, bool InputShown)
         {
             if (bank[question].ToString() == String.Empty)
@@ -159,6 +183,7 @@ namespace Velocity.ViewModels
             }
             return (answer, InputShown);
         }
+
         public void DefQBank()
         {
             Dictionary<string,string> Q_bank = new Dictionary<string,string>()
@@ -188,6 +213,7 @@ namespace Velocity.ViewModels
                 }
             }
             (Q1, Q2, Q3) = No_Dupe();
+
             (Q1a, HasInput1)  = Q_Gen(Q_bank, Q1, Q1a, HasInput1);
             (Q2a, HasInput2) = Q_Gen(Q_bank, Q2, Q2a, HasInput2);
             (Q3a, HasInput3) = Q_Gen(Q_bank, Q3, Q3a, HasInput3);            
