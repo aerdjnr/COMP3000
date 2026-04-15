@@ -39,28 +39,37 @@ namespace Velocity.ViewModels
         [ObservableProperty]
         private bool _MenuState = false;
 
+        // Question 1 variables 
         [ObservableProperty]
         string _Q1;
         [ObservableProperty]
         string _Q1a;
         [ObservableProperty]
+        bool _Q1Correct;
+        [ObservableProperty]
         bool _HasInput1;
         [ObservableProperty]
         string _UserAnswer1;
-        
+
+        // Question 2 variables 
         [ObservableProperty]
         string _Q2;
         [ObservableProperty]
         string _Q2a;
         [ObservableProperty]
+        bool _Q2Correct;
+        [ObservableProperty]
         bool _HasInput2;
         [ObservableProperty]
         string _UserAnswer2;
 
+        // Question 3 variables 
         [ObservableProperty]
         string _Q3;
         [ObservableProperty]
         string _Q3a;
+        [ObservableProperty]
+        bool _Q3Correct;
         [ObservableProperty]
         bool _HasInput3;
         [ObservableProperty]
@@ -72,27 +81,39 @@ namespace Velocity.ViewModels
         {
             if (HasInput1 == true)
             {
-                Debug.WriteLine(Q1a, UserAnswer1);
-                Answer_Check(Q1a, UserAnswer1);
+                Q1Correct = Answer_Check(Q1a, UserAnswer1);
             }
             else
             {
-                Debug.WriteLine(Q1, HasInput1.ToString());
-                Checker_Assign(Q1).Invoke();
+                Q1Correct = Checker_Assign(Q1).Invoke();
             }
         }
 
         [RelayCommand]
         public void Checker2()
         {
-            Checker_Assign(Q2).Invoke();
-            
+            if (HasInput2 == true)
+            {
+                Q2Correct = Answer_Check(Q2a, UserAnswer2);
+            }
+            else
+            {
+
+                Q2Correct = Checker_Assign(Q2).Invoke();
+            }
         }
 
         [RelayCommand]
         public void Checker3()
         {
-            Checker_Assign(Q3).Invoke();
+            if (HasInput3 == true)
+            {
+                Q3Correct = Answer_Check(Q3a, UserAnswer3);
+            }
+            else
+            {
+                Q3Correct = Checker_Assign(Q3).Invoke();
+            }
         }
 
         [RelayCommand]
