@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 
 
@@ -43,23 +44,31 @@ namespace Velocity.ViewModels
         string _Q1;
         [ObservableProperty]
         string _Q1a;
+        [ObservableProperty]
+        bool _HasInput1;
         
         [ObservableProperty]
         string _Q2;
         [ObservableProperty]
         string _Q2a;
+        [ObservableProperty]
+        bool _HasInput2;
 
         [ObservableProperty]
         string _Q3;
         [ObservableProperty]
         string _Q3a;
-
-        [ObservableProperty]
-        bool _HasInput1;
-        [ObservableProperty]
-        bool _HasInput2;
         [ObservableProperty]
         bool _HasInput3;
+
+        [RelayCommand]
+        public void Checker1(){}
+
+        [RelayCommand]
+        public void Checker2(){}
+
+        [RelayCommand]
+        public void Checker3(){}
 
         [RelayCommand]
         private void Execute() 
@@ -89,7 +98,55 @@ namespace Velocity.ViewModels
             _main.NavTut();
         }
 
-        public (string, bool) TextBox_Gen(Dictionary<string,string> bank, string question,string answer, bool InputShown )
+         
+        public bool FW_Up()
+        {
+            DefCommands def = new DefCommands();
+            bool fw_state = def.fw_state;
+            if (fw_state==true)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool Two_Services()
+        {
+            DefCommands def = new DefCommands();
+            string[] services = def.service_list;
+            if (services.Length >= 3)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool Only_API()
+        {
+            DefCommands def = new DefCommands();
+            string api = def.apiService;
+            string[] services = def.service_list;
+            if (services.Length == 2)
+            {
+                if (fw_rule_list.Contains(api))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+
+        public bool One_Rule()
+        {
+            if (fw_rule_list.Length == 2)
+            {
+                return true;
+            }
+            return false;
+        }
+        
+        public (string, bool) Q_Gen(Dictionary<string,string> bank, string question,string answer, bool InputShown)
         {
             if (bank[question].ToString() == String.Empty)
             {
@@ -102,19 +159,6 @@ namespace Velocity.ViewModels
             }
             return (answer, InputShown);
         }
-        public string fw_up()
-        {
-            HasInput1 = false;
-            DefCommands comm_access= new DefCommands();
-            bool fw_state = comm_access.fw_state;
-            if (fw_state==true)
-            {
-                return "correct";
-            }
-           
-            return "incorrect";
-        }
-
         public void DefQBank()
         {
             Dictionary<string,string> Q_bank = new Dictionary<string,string>()
@@ -127,16 +171,31 @@ namespace Velocity.ViewModels
                 {"How do I check the currently enabled/running services?","service show" },
                 {"What is the port shown in the sample rule?","22" },
             };
-
-            Random rand = new Random();
-            Q1 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
-            Q2 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
-            Q3 = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
-
-            (Q1a, HasInput1)  = TextBox_Gen(Q_bank, Q1, Q1a, HasInput1);
-            (Q2a, HasInput2) = TextBox_Gen(Q_bank, Q2, Q2a, HasInput2);
-            (Q3a, HasInput3) = TextBox_Gen(Q_bank, Q3, Q3a, HasInput3);            
+            
+            (string, string, string) No_Dupe() 
+            {                 
+                Random rand = new Random();
+                string a = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
+                string b = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
+                string c = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
+                if (a == b || a == b || b == c)
+                {
+                    return No_Dupe();
+                }
+                else
+                {
+                    return (a, b, c);
+                }
+            }
+            (Q1, Q2, Q3) = No_Dupe();
+            (Q1a, HasInput1)  = Q_Gen(Q_bank, Q1, Q1a, HasInput1);
+            (Q2a, HasInput2) = Q_Gen(Q_bank, Q2, Q2a, HasInput2);
+            (Q3a, HasInput3) = Q_Gen(Q_bank, Q3, Q3a, HasInput3);            
             Debug.WriteLine(Q1a);
+            Debug.WriteLine(Q2a);
+            Debug.WriteLine(Q3a);
+            Debug.WriteLine(HasInput1.ToString());
+            Debug.WriteLine(HasInput2.ToString());
             Debug.WriteLine(HasInput3.ToString());
         }
     }
@@ -149,10 +208,10 @@ namespace Velocity.ViewModels
         string fw_rule = "22/tcp    Allow   192.168.0.10";
 
         // Command "service" variables
-        string[] service_list = ["Service       Port"];
+        public string[] service_list = ["Service       Port"];
         string webService = "WebService    8080";
         string dataService = "DataService   5600";
-        string apiService = "ApiService    3000";
+        public string apiService = "ApiService    3000";
         public IEnumerable<string> Process(string command)
         {
             // Command splicing to specify command and necessary process required

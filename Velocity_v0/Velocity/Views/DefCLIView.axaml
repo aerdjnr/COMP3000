@@ -50,7 +50,8 @@
                                 IsVisible="{Binding HasInput1}"/>
                             <Button 
                                 Grid.Row="3"
-                                Margin="10,5,0,20">
+                                Margin="10,5,0,20"
+                                Command="{Binding Checker1Command}">
                                 Check</Button>
 
                             <TextBlock
@@ -64,7 +65,8 @@
                                 IsVisible="{Binding HasInput2}"/>
                             <Button 
                                 Grid.Row="6"
-                                Margin="10,5,0,20">
+                                Margin="10,5,0,20"
+                                Command="{Binding Checker2Command}">
                                 Check</Button>
 
                             <TextBlock
@@ -77,7 +79,8 @@
                                 IsVisible="{Binding HasInput3}"/>
                             <Button 
                                 Grid.Row="9"
-                                Margin="10,5,0,20">
+                                Margin="10,5,0,20"
+                                Command="{Binding Checker3Command}">
                                 Check</Button>
 
                         </Grid>
