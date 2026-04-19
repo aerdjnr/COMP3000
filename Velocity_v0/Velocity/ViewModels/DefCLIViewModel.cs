@@ -525,7 +525,7 @@ namespace Velocity.ViewModels
             {
                 _ => new[]
                 {
-                    "Potential escape located"
+                    $"Unkown command: {command}"
                 }
             };
         }

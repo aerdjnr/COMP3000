@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -28,6 +29,11 @@ namespace Velocity.ViewModels
         [ObservableProperty]
         private bool _MenuState = false;
 
+        [ObservableProperty]
+        string _Result1;
+        [ObservableProperty]
+        string _Result2;
+
         [RelayCommand]
         private void Execute() 
         { 
@@ -54,6 +60,43 @@ namespace Velocity.ViewModels
         private void GoBack()
         {
             _main.NavTut();
+        }
+
+        [RelayCommand]
+        private void CoinToss1() 
+        {
+            string Option1 = "Checks executed, correct! (Maybe)";
+            string Option2 = "Checks executed, incorrect. (Maybe)";
+
+            Random rand = new Random();
+            bool result = rand.Next(2) == 0;
+            if (result == true)
+            {
+                Result1 = Option1;
+            }
+            else
+            {
+                Result1 = Option2;
+            }
+        }
+
+        [RelayCommand]
+        private void CoinToss2() 
+        {
+
+            string Option1 = "You gave an answer...I hope";
+            string Option2 = "No right answer here, but good curiosity!";
+
+            Random rand = new Random();
+            bool result = rand.Next(2) == 0;
+            if (result == true)
+            {
+                Result2 = Option1;
+            }
+            else
+            {
+                Result2 = Option2;
+            }
         }
     }
     public class IntroCommands

@@ -30,7 +30,7 @@
             Margin="0,50,200,0"
             Grid.Row="1"
             Grid.Column="1"
-            Command="{Binding OpenVelocityCommand}"/>
+            Command="{Binding OpenIntroductionCommand}"/>
         
         <Button Content="Defense"
             FontSize="16"

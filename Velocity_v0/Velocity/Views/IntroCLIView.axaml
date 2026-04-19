@@ -15,50 +15,78 @@
         <SplitView.Pane>
             <StackPanel>
                 <Button Content="☰"
-                        Command="{Binding MenuToggleCommand}"/>
+                        Command="{Binding MenuToggleCommand}"
+                        Margin="10,5,0,0"/>
                 <Button Content="Back"
-                        Margin="0,5,0,0"
+                        Margin="10,5,0,0"
                         Command="{Binding GoBackCommand}"/>
                 <StackPanel>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                    <ScrollViewer Height="500">
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 							
                             <TextBlock
-                                Padding="0,20,0,50"
+                                Padding="10,20,0,30"
                                 Grid.Row="0"
                                 TextWrapping="Wrap">
-                                Lorem ipsum dolor sit amet, 
-                                consectetur adipiscing elit, 
-                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                Ut enim ad minim veniam, 
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                This is where the scene is set. Each lab or tutorial will provide further
+                                information which you will need to better understand the concept as well as 
+                                provide some basic insight into the objectives.
+                                <LineBreak/>
+                                <LineBreak/>
+                                Below are the two different types of question:
                             </TextBlock>
      
+
                             <TextBlock
-                                Grid.Row="1" Text="aaa"></TextBlock> 
-                            <TextBox Grid.Row="2" Watermark="Answer"/>
+                                Grid.Row="1" 
+                                TextWrapping="Wrap"
+                                Text="A task involving the CLI"
+                                Padding="10,0,10,0"/>
+                            <TextBox 
+                                Grid.Row="2" 
+                                Watermark="Answer" 
+                                IsVisible="False"/>
                             <Button 
                                 Grid.Row="3"
-                                Margin="0,0,0,20">
+                                Margin="10,5,0,5"
+                                Command="{Binding CoinToss1Command}">
                                 Check</Button>
+                            <TextBlock
+                                Grid.Row="3"
+                                TextWrapping="Wrap"
+                                Text="{Binding Result1}"
+                                Padding="75,19,0,20"/>
+                            <TextBlock
+                                Grid.Row="4"
+                                TextWrapping="Wrap"
+                                Padding="10,0,10,30"
+                                Text="These are questions with no 'answer' to give. It carries out a check in the background and let's you know if what you did was correct."/>
+
 
                             <TextBlock
-                                Grid.Row="4" Text="aaa"></TextBlock>
-                            <TextBox Grid.Row="5" Watermark="Answer"/>
+                                Grid.Row="5" 
+                                TextWrapping="Wrap"
+                                Text="A test of knowledge"
+                                Padding="10,0,10,0"/>
+                            <TextBox 
+                                Grid.Row="6" 
+                                Margin="10,0,10,0"
+                                Watermark="Answer"/>
                             <Button 
-                                Grid.Row="6"
-                                Margin="0,0,0,20">
+                                Grid.Row="7"
+                                Margin="10,5,0,5"
+                                Command="{Binding CoinToss2Command}">
                                 Check</Button>
-
                             <TextBlock
-                                Grid.Row="7" Text="aaa"></TextBlock>
-                            <TextBox Grid.Row="8" Watermark="Answer"/>
-                            <Button 
-                                Grid.Row="9"
-                                Margin="0,0,0,20">
-                                Check</Button>
+                                Grid.Row="7"
+                                TextWrapping="Wrap"
+                                Text="{Binding Result2}"
+                                Padding="75,19,0,20"/>
+                            <TextBlock
+                                Grid.Row="8"
+                                TextWrapping="Wrap"
+                                Text="These are questions that will test your understanding (and memory) of the lab"
+                                Padding="10,0,10,0"/>
 
                         </Grid>
                     </ScrollViewer>

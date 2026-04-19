@@ -34,8 +34,8 @@
                                 <LineBreak/>
                                 <LineBreak/>
                                 "Hardening" in this space refers to the act of securing 
-                                a machine against potential cyber threats. There are a few things that can be done
-                                but for now, we are focusing on the firewall, and the active services that are required
+                                a machine against potential cyber threats. There are a few things that can be done, 
+                                but for now, we are focusing on the firewall and the active services that are required
                             </TextBlock>
      
 
