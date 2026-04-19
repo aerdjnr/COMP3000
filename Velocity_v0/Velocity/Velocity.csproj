@@ -28,6 +28,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Tutorials\OffCLIView.axaml.cs">
+      <DependentUpon>OffCLIView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tutorials\InformCLIView.axaml.cs">
+      <DependentUpon>InformCLIView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\TutView.axaml.cs">
       <DependentUpon>TutView.axaml</DependentUpon>
     </Compile>
@@ -40,10 +46,10 @@
     <Compile Update="Views\HomeView.axaml.cs">
       <DependentUpon>HomeView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\DefCLIView.axaml.cs">
+    <Compile Update="Views\Tutorials\DefCLIView.axaml.cs">
       <DependentUpon>DefCLIView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\IntroCLIView.axaml.cs">
+    <Compile Update="Views\Tutorials\IntroCLIView.axaml.cs">
       <DependentUpon>IntroCLIView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>

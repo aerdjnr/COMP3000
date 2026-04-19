@@ -6,9 +6,9 @@ namespace Velocity.ViewModels
     {
         public MainWindowViewModel()
         {
-            //InitLogin();
+            InitLogin();
             //DefCLI();
-            IntroCLI();
+            //IntroCLI();
             //NavTut();
         }
 
@@ -21,5 +21,7 @@ namespace Velocity.ViewModels
         public void NavTut() => CurrentView = new TutViewModel(this);
         public void IntroCLI() => CurrentView = new IntroCLIViewModel(this);
         public void DefCLI() => CurrentView = new DefCLIViewModel(this);
+        public void InformCLI() => CurrentView = new InformCLIViewModel(this);
+        public void OffCLI() => CurrentView = new OffCLIViewModel(this);
     }
 }

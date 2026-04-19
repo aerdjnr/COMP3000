@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Velocity.ViewModels;
 
 namespace Velocity.Views
 {

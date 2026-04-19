@@ -25,6 +25,17 @@ namespace Velocity.ViewModels
         }
 
         [RelayCommand]
+        private void OpenInformation()
+        {
+            _main.InformCLI();
+        }
+        [RelayCommand]
+        private void OpenOffense()
+        {
+            _main.OffCLI();
+        }
+
+        [RelayCommand]
         private void GoBack()
         {
             _main.NavHome();

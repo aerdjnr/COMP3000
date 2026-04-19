@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
 using System.DirectoryServices.Protocols;
 using System.Net;
-using System;
 
 namespace Velocity.ViewModels
 {

@@ -3,27 +3,26 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 
 
 
 namespace Velocity.ViewModels
 {
-    public partial class DefCLIViewModel : ViewModelBase
+    public partial class OffCLIViewModel : ViewModelBase
     {
         public override double? SetWidth => 800;
         public override double? SetHeight => 575;
 
         private readonly MainWindowViewModel _main;
-        public DefCLIViewModel(MainWindowViewModel main)
+        public OffCLIViewModel(MainWindowViewModel main)
         {
             _main = main;
-            DefQBank();
+            OffQBank();
         }
 
 
-        private readonly DefCommands _givenCommand = new();
+        private readonly OffCommands _givenCommand = new();
         
         public ObservableCollection<string> OutputLines { get; } = new();
 
@@ -135,7 +134,7 @@ namespace Velocity.ViewModels
             {
                 return;
             }
-            string userInput = "User@Defense> " + CommandInput;
+            string userInput = "User@Offense> " + CommandInput;
             OutputLines.Add(userInput);
             foreach (var line in _givenCommand.Process(CommandInput))
             { 
@@ -173,8 +172,8 @@ namespace Velocity.ViewModels
         // All answer checks for questions with no input boxes
         public bool FW_Up()
         {
-            DefCommands def = _givenCommand;
-            bool fw_state = def.fw_state;
+            OffCommands off = _givenCommand;
+            bool fw_state = off.fw_state;
             if (fw_state==true)
             {
                 return true;
@@ -184,8 +183,8 @@ namespace Velocity.ViewModels
 
         public bool Two_Services()
         {
-            DefCommands def = _givenCommand;
-            string[] services = def.service_list;
+            OffCommands off = _givenCommand;
+            string[] services = off.service_list;
             if (services.Length >= 3)
             {
                 return true;
@@ -195,9 +194,9 @@ namespace Velocity.ViewModels
 
         public bool Only_API()
         {
-            DefCommands def = _givenCommand;
-            string api = def.apiService;
-            string[] services = def.service_list;
+            OffCommands off = _givenCommand;
+            string api = off.apiService;
+            string[] services = off.service_list;
             if (services.Length == 2)
             {
                 if (fw_rule_list.Contains(api))
@@ -250,7 +249,7 @@ namespace Velocity.ViewModels
         }
 
         // Question bank for all the questions in this tutorial lab
-        public void DefQBank()
+        public void OffQBank()
         {
             Dictionary<string,string> Q_bank = new Dictionary<string,string>()
             {
@@ -293,7 +292,7 @@ namespace Velocity.ViewModels
         }
     }
 
-    public class DefCommands
+    public class OffCommands
     {
         // Command "fw" variables
         public bool fw_state = false;

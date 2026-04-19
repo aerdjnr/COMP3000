@@ -1,22 +1,19 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Markup.Xaml;
-using System.Diagnostics;
 using Velocity.ViewModels;
 
 namespace Velocity.Views
 {
-    public partial class IntroCLIView : UserControl
+    public partial class OffCLIView : UserControl
     {
-        public IntroCLIView()
+        public OffCLIView()
         {
             InitializeComponent();
         }
 
         private void PressEnter(object? sender, KeyEventArgs e)
         {
-            if (DataContext is not IntroCLIViewModel vm)
+            if (DataContext is not OffCLIViewModel vm)
                 return;
             switch (e.Key)
             {
@@ -27,5 +24,4 @@ namespace Velocity.Views
             }
         }
     }
-
 }
