@@ -9,26 +9,25 @@ using System.Linq;
 
 namespace Velocity.ViewModels
 {
-    public partial class InformCLIViewModel : ViewModelBase
+    public partial class DefLabViewModel : ViewModelBase
     {
         public override double? SetWidth => 800;
         public override double? SetHeight => 575;
 
         private readonly MainWindowViewModel _main;
-        public InformCLIViewModel(MainWindowViewModel main)
+        public DefLabViewModel(MainWindowViewModel main)
         {
             _main = main;
-            InfoQBank();
+            DefLabQBank();
         }
 
 
-        private readonly InfoCommands _givenCommand = new();
+        private readonly DefCommands _givenCommand = new();
         
         public ObservableCollection<string> OutputLines { get; } = new();
 
-        string[] network1;
-        string[] network2;
-        string[] localhost;
+        public string[] fw_rule_list = ["To    Action    From"];
+
 
         [ObservableProperty]
         string _CommandInput;
@@ -135,7 +134,7 @@ namespace Velocity.ViewModels
             {
                 return;
             }
-            string userInput = "User@Information> " + CommandInput;
+            string userInput = "User@Defense> " + CommandInput;
             OutputLines.Add(userInput);
             foreach (var line in _givenCommand.Process(CommandInput))
             { 
@@ -173,24 +172,48 @@ namespace Velocity.ViewModels
         // All answer checks for questions with no input boxes
         public bool FW_Up()
         {
-            InfoCommands info = _givenCommand;
+            DefCommands def = _givenCommand;
+            bool fw_state = def.fw_state;
+            if (fw_state==true)
+            {
+                return true;
+            }
             return false;
         }
 
         public bool Two_Services()
         {
-            InfoCommands info = _givenCommand;
+            DefCommands def = _givenCommand;
+            string[] services = def.service_list;
+            if (services.Length >= 3)
+            {
+                return true;
+            }
             return false;
         }
 
         public bool Only_API()
         {
-            InfoCommands info = _givenCommand;
+            DefCommands def = _givenCommand;
+            string api = def.apiService;
+            string[] services = def.service_list;
+            if (services.Length == 2)
+            {
+                if (fw_rule_list.Contains(api))
+                {
+                    return true;
+                }
+                return false;
+            }
             return false;
         }
 
         public bool One_Rule()
         {
+            if (fw_rule_list.Length == 2)
+            {
+                return true;
+            }
             return false;
         }
 
@@ -226,7 +249,7 @@ namespace Velocity.ViewModels
         }
 
         // Question bank for all the questions in this tutorial lab
-        public void InfoQBank()
+        public void DefLabQBank()
         {
             Dictionary<string,string> Q_bank = new Dictionary<string,string>()
             {
@@ -269,7 +292,7 @@ namespace Velocity.ViewModels
         }
     }
 
-    public class InfoCommands
+    public class DefLabCommands
     {
         // Command "fw" variables
         public bool fw_state = false;

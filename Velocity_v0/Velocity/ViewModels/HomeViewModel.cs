@@ -17,5 +17,11 @@ namespace Velocity.ViewModels
         {
             _main.NavTut();
         }
+
+        [RelayCommand]
+        private void OpenRem()
+        {
+            _main.NavRem();
+        }
     }   
 }

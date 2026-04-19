@@ -25,6 +25,7 @@
             TextWrapping="Wrap"
             Width="500"
             FontSize="18"
+            TextAlignment="Center"
             HorizontalAlignment="Center"
             Margin="0,50,0,0"
             Grid.Row="2"/>
@@ -54,7 +55,8 @@
             VerticalContentAlignment="Center"
             HorizontalAlignment="Right"
             Margin="0,0,200,0"
-            Grid.Row="4"/>
+            Grid.Row="4"
+            Command="{Binding OpenRemCommand}"/>
     </Grid>
     
    
