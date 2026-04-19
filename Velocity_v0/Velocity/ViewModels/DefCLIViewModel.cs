@@ -45,6 +45,8 @@ namespace Velocity.ViewModels
         [ObservableProperty]
         bool _Q1Correct;
         [ObservableProperty]
+        bool _Q1Incorrect;
+        [ObservableProperty]
         bool _HasInput1;
         [ObservableProperty]
         string _UserAnswer1;
@@ -56,6 +58,8 @@ namespace Velocity.ViewModels
         string _Q2a;
         [ObservableProperty]
         bool _Q2Correct;
+        [ObservableProperty]
+        bool _Q2Incorrect;
         [ObservableProperty]
         bool _HasInput2;
         [ObservableProperty]
@@ -69,6 +73,8 @@ namespace Velocity.ViewModels
         [ObservableProperty]
         bool _Q3Correct;
         [ObservableProperty]
+        bool _Q3Incorrect;
+        [ObservableProperty]
         bool _HasInput3;
         [ObservableProperty]
         string _UserAnswer3;
@@ -80,12 +86,12 @@ namespace Velocity.ViewModels
             if (HasInput1 == true)
             {
                 Q1Correct = Answer_Check(Q1a, UserAnswer1);
-                Debug.WriteLine(Q1Correct.ToString());
+                Q1Incorrect = !Q1Correct;
             }
             else
             {
                 Q1Correct = Checker_Assign(Q1).Invoke();
-                Debug.WriteLine(Q1Correct.ToString());
+                Q1Incorrect = !Q1Correct;
             }
         }
 
@@ -96,11 +102,12 @@ namespace Velocity.ViewModels
             if (HasInput2 == true)
             {
                 Q2Correct = Answer_Check(Q2a, UserAnswer2);
+                Q1Incorrect = !Q1Correct;
             }
             else
             {
-
                 Q2Correct = Checker_Assign(Q2).Invoke();
+                Q2Incorrect = !Q2Correct;
             }
         }
 
@@ -111,10 +118,12 @@ namespace Velocity.ViewModels
             if (HasInput3 == true)
             {
                 Q3Correct = Answer_Check(Q3a, UserAnswer3);
+                Q3Incorrect = !Q3Correct;
             }
             else
             {
                 Q3Correct = Checker_Assign(Q3).Invoke();
+                Q3Incorrect = !Q3Correct;
             }
         }
 
@@ -164,13 +173,10 @@ namespace Velocity.ViewModels
         // All answer checks for questions with no input boxes
         public bool FW_Up()
         {
-            Debug.WriteLine("Code executed");
             DefCommands def = _givenCommand;
             bool fw_state = def.fw_state;
-            Debug.WriteLine(fw_state.ToString(),"AAA");
             if (fw_state==true)
             {
-                Debug.WriteLine("It is detected");  
                 return true;
             }
             return false;
@@ -178,7 +184,6 @@ namespace Velocity.ViewModels
 
         public bool Two_Services()
         {
-            Debug.WriteLine("Code executed");
             DefCommands def = _givenCommand;
             string[] services = def.service_list;
             if (services.Length >= 3)
@@ -190,7 +195,6 @@ namespace Velocity.ViewModels
 
         public bool Only_API()
         {
-            Debug.WriteLine("Code executed");
             DefCommands def = _givenCommand;
             string api = def.apiService;
             string[] services = def.service_list;
@@ -207,7 +211,6 @@ namespace Velocity.ViewModels
 
         public bool One_Rule()
         {
-            Debug.WriteLine("Code executed");
             if (fw_rule_list.Length == 2)
             {
                 return true;
@@ -292,7 +295,6 @@ namespace Velocity.ViewModels
 
     public class DefCommands
     {
-        
         // Command "fw" variables
         public bool fw_state = false;
         string[] fw_rule_list = ["To    Action    From"];

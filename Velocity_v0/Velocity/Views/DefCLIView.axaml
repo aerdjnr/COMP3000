@@ -21,20 +21,21 @@
                         Margin="10,5,0,0"
                         Command="{Binding GoBackCommand}"/>
                 <StackPanel>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer Height="500">
                         <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 							
                             <TextBlock
                                 Padding="10,20,0,30"
                                 Grid.Row="0"
                                 TextWrapping="Wrap">
-                                Lorem ipsum dolor sit amet, 
-                                consectetur adipiscing elit, 
-                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                Ut enim ad minim veniam, 
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                This is the Defense Tutorial! This aims
+                                to help you understand the process of
+                                hardening a machine. 
+                                <LineBreak/>
+                                <LineBreak/>
+                                "Hardening" in this space refers to the act of securing 
+                                a machine against potential cyber threats. There are a few things that can be done
+                                but for now, we are focusing on the firewall, and the active services that are required
                             </TextBlock>
      
 
@@ -63,7 +64,7 @@
                                 Grid.Row="3"
                                 Text="Try again!"
                                 Padding="75,12,0,20"
-                                IsVisible="{Binding Q1Correct}"/>
+                                IsVisible="{Binding Q1Incorrect}"/>
 
 
                             <TextBlock
@@ -82,6 +83,16 @@
                                 Margin="10,5,0,20"
                                 Command="{Binding Checker2Command}">
                                 Check</Button>
+                            <TextBlock
+                                Grid.Row="6"
+                                Text="Correct!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q2Correct}"/>
+                            <TextBlock
+                                Grid.Row="6"
+                                Text="Try again!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q2Incorrect}"/>
 
                             <TextBlock
                                 Grid.Row="7"
@@ -99,6 +110,16 @@
                                 Margin="10,5,0,20"
                                 Command="{Binding Checker3Command}">
                                 Check</Button>
+                            <TextBlock
+                                Grid.Row="9"
+                                Text="Correct!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q3Correct}"/>
+                            <TextBlock
+                                Grid.Row="9"
+                                Text="Try again!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q3Incorrect}"/>
 
                         </Grid>
                     </ScrollViewer>
@@ -133,7 +154,7 @@
                         Watermark="Type here:">
                     </TextBox>
         
-                    <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Hidden">
                         <ItemsControl ItemsSource="{Binding OutputLines}"
                                       Padding="10,10,0,0">
                             <ItemsControl.ItemTemplate>
