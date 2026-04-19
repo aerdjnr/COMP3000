@@ -80,10 +80,12 @@ namespace Velocity.ViewModels
             if (HasInput1 == true)
             {
                 Q1Correct = Answer_Check(Q1a, UserAnswer1);
+                Debug.WriteLine(Q1Correct.ToString());
             }
             else
             {
                 Q1Correct = Checker_Assign(Q1).Invoke();
+                Debug.WriteLine(Q1Correct.ToString());
             }
         }
 
@@ -147,6 +149,7 @@ namespace Velocity.ViewModels
             _main.NavTut();
         }
 
+
         // Answer checker for questions with input boxes
         public bool Answer_Check(string answer, string userInput)
         {
@@ -157,24 +160,26 @@ namespace Velocity.ViewModels
             return false;
         }
 
+
         // All answer checks for questions with no input boxes
         public bool FW_Up()
         {
             Debug.WriteLine("Code executed");
-            DefCommands def = new DefCommands();
+            DefCommands def = _givenCommand;
             bool fw_state = def.fw_state;
+            Debug.WriteLine(fw_state.ToString(),"AAA");
             if (fw_state==true)
             {
+                Debug.WriteLine("It is detected");  
                 return true;
             }
-            Debug.WriteLine("You didnt do it");
             return false;
         }
 
         public bool Two_Services()
         {
             Debug.WriteLine("Code executed");
-            DefCommands def = new DefCommands();
+            DefCommands def = _givenCommand;
             string[] services = def.service_list;
             if (services.Length >= 3)
             {
@@ -186,7 +191,7 @@ namespace Velocity.ViewModels
         public bool Only_API()
         {
             Debug.WriteLine("Code executed");
-            DefCommands def = new DefCommands();
+            DefCommands def = _givenCommand;
             string api = def.apiService;
             string[] services = def.service_list;
             if (services.Length == 2)
@@ -266,7 +271,6 @@ namespace Velocity.ViewModels
                 string c = Q_bank.ElementAt(rand.Next(0, Q_bank.Count)).Key;
                 if ((a == b) || (a == c) || (b == c))
                 {
-                    Debug.WriteLine("Duplicate detected");
                     return No_Dupe();
                 }
                 else
@@ -276,7 +280,7 @@ namespace Velocity.ViewModels
                 
             }
 
-            // Assigning all 3 questions at once, mainly for readability
+            // Assigning all 3 questions at once
             (Q1, Q2, Q3) = No_Dupe();
 
             // Similar process for the question answers
@@ -288,6 +292,7 @@ namespace Velocity.ViewModels
 
     public class DefCommands
     {
+        
         // Command "fw" variables
         public bool fw_state = false;
         string[] fw_rule_list = ["To    Action    From"];

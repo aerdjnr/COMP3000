@@ -6,9 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Velocity.Views.DefCLIView"
              x:DataType="vm:DefCLIViewModel">
-    <UserControl.Styles>
-    
-    </UserControl.Styles>
+
     <SplitView IsPaneOpen="{Binding MenuState}"
                 DisplayMode="Overlay"
                 OpenPaneLength="350">
@@ -39,8 +37,10 @@
                                 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                             </TextBlock>
      
+
                             <TextBlock
                                 Grid.Row="1"
+                                TextWrapping="Wrap"
                                 Text="{Binding Q1}"
                                 Padding="10,0,10,0"/>
                             <TextBox 
@@ -54,9 +54,21 @@
                                 Margin="10,5,0,20"
                                 Command="{Binding Checker1Command}">
                                 Check</Button>
+                            <TextBlock
+                                Grid.Row="3"
+                                Text="Correct!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q1Correct}"/>
+                            <TextBlock
+                                Grid.Row="3"
+                                Text="Try again!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q1Correct}"/>
+
 
                             <TextBlock
                                 Grid.Row="4" 
+                                TextWrapping="Wrap"
                                 Text="{Binding Q2}"
                                 Padding="10,0,10,0"/>
                             <TextBox 
@@ -72,7 +84,9 @@
                                 Check</Button>
 
                             <TextBlock
-                                Grid.Row="7" Text="{Binding Q3}"
+                                Grid.Row="7"
+                                TextWrapping="Wrap"
+                                Text="{Binding Q3}"
                                 Padding="10,0,10,0"/>
                             <TextBox 
                                 Grid.Row="8" 
