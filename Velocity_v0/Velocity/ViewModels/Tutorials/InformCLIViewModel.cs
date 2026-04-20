@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 
@@ -21,14 +22,10 @@ namespace Velocity.ViewModels
             InfoQBank();
         }
 
-
         private readonly InfoCommands _givenCommand = new();
         
         public ObservableCollection<string> OutputLines { get; } = new();
 
-        string[] network1;
-        string[] network2;
-        string[] localhost;
 
         [ObservableProperty]
         string _CommandInput;
@@ -271,18 +268,50 @@ namespace Velocity.ViewModels
 
     public class InfoCommands
     {
-        // Command "fw" variables
-        public bool fw_state = false;
-        string[] fw_rule_list = ["To    Action    From"];
-        string fw_rule = "22/tcp    Allow   192.168.0.10";
+        string[] Discovered = [];
 
-        // Command "service" variables
-        public string[] service_list = ["Service       Port"];
-        string webService = "WebService    8080";
-        string dataService = "DataService   5600";
-        public string apiService = "ApiService    3000";
         public IEnumerable<string> Process(string command)
         {
+            string[][] Network1 =
+                [
+                    ["192.168.10.0/24","192.168.10.5","192.168.10.6","192.168.10.8"],
+                    ["192.168.10.5","22"],["192.168.10.6","443"],["192.168.10.8","20","21"]
+                ];
+
+            string[][] Network2 =
+                [
+                    ["10.10.10.0/24", "10.10.10.2", "10.10.10.15", "10.10.10.32"],
+                    ["10.10.10.2","80"],["10.10.10.15","445"],["10.10.10.32","514"]
+                ];
+
+
+            string[] FoundNetwork(string network)
+            {
+                if ((Network1[0][0]==network) || ("192.168.10.0" == network))
+                {
+                    if (Discovered.ToArray().Contains(Network1[0][1]))
+                    {
+                        return Discovered;
+                    }
+                    Discovered = Discovered.Append(Network1[0][1]).ToArray();
+                    Discovered = Discovered.Append(Network1[0][2]).ToArray();
+                    Discovered = Discovered.Append(Network1[0][3]).ToArray();
+                    return Discovered;
+                }
+
+                if (Network2[0][0] == network || ("10.10.10.0" == network))
+                {
+                    if (Discovered.ToArray().Contains(Network2[0][1]))
+                    {
+                        return Discovered;
+                    }
+                    Discovered = Discovered.Append(Network2[0][1]).ToArray();
+                    Discovered = Discovered.Append(Network2[0][2]).ToArray();
+                    Discovered = Discovered.Append(Network2[0][3]).ToArray();
+                    return Discovered;
+                } 
+                return ["No network with that address in this lab"];
+            }
             // Command splicing to specify command and necessary process required
             string cd = command.Trim().ToLowerInvariant();
             string[] cd_ext = cd.Split(' ');
@@ -295,23 +324,13 @@ namespace Velocity.ViewModels
                     "help" => new[]
                     {
                         "Commands:",
-                        "    fw          [ status | enable | disable | rule ] - Configure the device's firewall",
-                        "    service     [ show | start | stop ] - configure services",
+                        "   scan          [ network | host ] - Perform a scan on a given network",
                     },
-                    "fw" => new[]
+                    "scan" => new[]
                     {
-                        "fw options:",
-                        "    status - displays firewall state",
-                        "    enable - turns on the firewall",
-                        "    disable - turns off the firewall",
-                        "    rule - configure firewall rules",
-                    },
-                    "service" => new[]
-                    {
-                        "service options:",
-                        "    show - list currently running services",
-                        "    start - initiates a service",
-                        "    stop - halts a service"
+                        "scan options:",
+                        "    network - Scan a given network to find active machines",
+                        "    host  - Scan discovered hosts for open ports"
                     },
                     _ => new[]
                     {
@@ -323,37 +342,23 @@ namespace Velocity.ViewModels
             // Command + option
             if (cd_ext.Length == 2)
             {
-                if (cd_ext[0] == "fw")
+                if (cd_ext[0] == "scan")
                 {
                     switch(cd_ext[1])
                     {
-                        case "status":
-                            if (fw_state==true)
-                            {
-                                return new[] { "State: On" };
-                            }
-                            else
-                            {
-                                return new[] { "State: Off" };
-                            }
-
-                        case "enable":
-                            fw_state = true;
-                            return new[] { "Firewall enabled" };
-                        
-                        case "disable":
-                            fw_state = false;
-                            return new[] { "Firewall disabled" };
-                        
-                        case "rule":
+                        case "network":
                             return new[] 
-                            { 
-                                "fw rule [option]",
-                                "        show - lists currently enabled rules",
-                                "        add - inserts a sample rule",
-                                "        remove - delete a sample rule"
+                            {
+                                "Here are a selection of simulated networks:",
+                                "192.168.10.0/24",
+                                "10.10.10.0/24",
+                                "",
+                                "Use the format 'scan network [ ip address ]'"
                             };
 
+                        case "host":
+                            return new[] { "filler text" };
+                        
                         default:
                             return new[]
                             {
@@ -361,47 +366,6 @@ namespace Velocity.ViewModels
                             };
                     }
                 }
-
-                if (cd_ext[0] == "service")
-                {
-                    switch (cd_ext[1])
-                    {
-                        case "show":
-                            if (service_list.Length == 1)
-                            {
-                                return new[]
-                                {
-                                    "No services currently running"
-                                };
-                            }
-                            return service_list;
-
-                        case "start":
-                            return new[]
-                            {
-                                "Here is a list of example services to start:",
-                                "    WebService",
-                                "    DataService",
-                                "    ApiService",
-                            };
-
-                        case "stop":
-                            return new[]
-                            {
-                                "Here is a list of example services to stop:",
-                                "    WebService",
-                                "    DataService",
-                                "    ApiService",
-                            };
-
-                        default:
-                            return new[]
-                            {
-                              "Invalid option"
-                            };
-                    }
-                }
-
                 return cd switch
                 {
                     _ => new[]
@@ -410,90 +374,69 @@ namespace Velocity.ViewModels
                     }
                 };
             }
-
-            // Command + Option + Object
-            if (cd_ext.Length >= 3)
+            if (cd_ext.Length == 3) 
             {
-                if (cd_ext[0] == "fw")
+                if (cd_ext[1] == "network")
                 {
                     switch (cd_ext[2])
                     {
-                        case "show":
-                            if (fw_rule_list.Length == 1)
+                        case "192.168.10.0/24" or "192.168.10.0":
+                            if (Discovered.Length == 6)
+                            {
+                                return new[] { "Discovered all possible networks (in the tutorial at least)" };
+                            }
+                            FoundNetwork(cd_ext[2]);
+                            if (Discovered.Length == 3)
                             {
                                 return new[]
                                 {
-                                    "No rules configured"
-                                };
+                                    "Hosts Discovered",
+                                    Discovered[0],
+                                    Discovered[1],
+                                    Discovered[2],
+                                }; 
                             }
-                            return fw_rule_list;
-
-                        case "add":
-                            fw_rule_list = fw_rule_list.Append(fw_rule).ToArray();
-                            return new[] { "Sample rule added, go and take a look!" };
-
-                        case "remove":
-                            fw_rule_list = new string[] { fw_rule_list[0] };
-                            return new[] { "Sample rule removed, go and take a look!" };
-
-                        default:
                             return new[]
                             {
-                              "Invalid option"
+                                "Hosts Discovered",
+                                Discovered[0],
+                                Discovered[1],
+                                Discovered[2],
+                                Discovered[3],
+                                Discovered[4],
+                                Discovered[5],
                             };
-                    }
-                }
-
-                if (cd_ext[0] == "service")
-                {
-                    if (cd_ext[1]=="start")
-                    {
-                        switch (cd_ext[2])
-                        {
-                            case "webservice":
-                                service_list = service_list.Append(webService).ToArray();
-                                return service_list;
                         
-                            case "dataservice":
-                                service_list = service_list.Append(dataService).ToArray();
-                                return service_list;
-
-
-                            case "apiservice":
-                                service_list = service_list.Append(apiService).ToArray();
-                                return service_list;
-
-
-                            default:
-                                return new[] 
-                                {
-                                    "Invalid service. Try 'service start' for a list of example services"
-                                };
-                        }
-                    }
-                    if (cd_ext[1] == "stop")
-                    {
-                        List<string> list_conv = service_list.ToList();
-                        switch (cd_ext[2]) 
-                        {
-                            case "webservice":
-                                list_conv.Remove(webService);
-                                return list_conv.ToArray();
-
-                            case "dataservice":
-                                list_conv.Remove(dataService);
-                                return list_conv.ToArray();
-
-                            case "apiservice":
-                                list_conv.Remove(apiService);
-                                return list_conv.ToArray();
-
-                            default:
+                        case "10.10.10.0/24" or "10.10.10.0":
+                            if (Discovered.Length == 6)
+                            {
+                                return new[] { "Discovered all possible networks (in the tutorial at least)" };
+                            }
+                            FoundNetwork(cd_ext[2]);
+                            Debug.WriteLine(Discovered.Length.ToString());
+                            if (Discovered.Length == 3)
+                            {
                                 return new[]
                                 {
-                                    "Invalid service. Try 'service start' for a list of example services"
+                                    "Hosts Discovered",
+                                    Discovered[0],
+                                    Discovered[1],
+                                    Discovered[2],
                                 };
-                        }
+                            }
+                            return new[]
+                            {
+                                "Hosts Discovered",
+                                Discovered[0],
+                                Discovered[1],
+                                Discovered[2],
+                                Discovered[3],
+                                Discovered[4],
+                                Discovered[5],
+                            };
+
+                        default:
+                            return new[] { "Invalid Selection" };
                     }
                 }
             }
