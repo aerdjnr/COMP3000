@@ -371,7 +371,7 @@ namespace Velocity.ViewModels
                         case "rule":
                             return new[] 
                             { 
-                                "fw rule [option]",
+                                "fw rule [option]:",
                                 "        show - lists currently enabled rules",
                                 "        add - inserts a sample rule",
                                 "        remove - delete a sample rule"

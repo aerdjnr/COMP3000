@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -275,17 +276,21 @@ namespace Velocity.ViewModels
             string[][] Network1 =
                 [
                     ["192.168.10.0/24","192.168.10.5","192.168.10.6","192.168.10.8"],
-                    ["192.168.10.5","22"],["192.168.10.6","443"],["192.168.10.8","20","21"]
+                    ["192.168.10.5","22"],
+                    ["192.168.10.6","443"],
+                    ["192.168.10.8","20","21"]
                 ];
 
             string[][] Network2 =
                 [
                     ["10.10.10.0/24", "10.10.10.2", "10.10.10.15", "10.10.10.32"],
-                    ["10.10.10.2","80"],["10.10.10.15","445"],["10.10.10.32","514"]
+                    ["10.10.10.2","80"],
+                    ["10.10.10.15","445"],
+                    ["10.10.10.32","514"]
                 ];
 
 
-            string[] FoundNetwork(string network)
+            string[] NetworkFinder(string network)
             {
                 if ((Network1[0][0]==network) || ("192.168.10.0" == network))
                 {
@@ -311,6 +316,25 @@ namespace Velocity.ViewModels
                     return Discovered;
                 } 
                 return ["No network with that address in this lab"];
+            }
+
+            string[] PortFinder(string host)
+            {
+                if (Discovered.ToArray().Contains(host))
+                {
+                    if (Network1[0].ToArray().Contains(host))
+                    {
+                        // Stores and returns the matching host and port 'object'
+                        string[] Found = Network1[Network1[0].ToArray().IndexOf(host)];
+                        return Found;
+                    }
+                    if (Network2[0].ToArray().Contains(host))
+                    {
+                        string[] Found = Network2[Network2[0].ToArray().IndexOf(host)];
+                        return Found;
+                    }
+                };
+                return new[] {"Address not discovered, or doesn't exist"}; 
             }
             // Command splicing to specify command and necessary process required
             string cd = command.Trim().ToLowerInvariant();
@@ -353,11 +377,15 @@ namespace Velocity.ViewModels
                                 "192.168.10.0/24",
                                 "10.10.10.0/24",
                                 "",
-                                "Use the format 'scan network [ ip address ]'"
+                                "Use the format 'scan network [ ip address subnet ]'"
                             };
 
                         case "host":
-                            return new[] { "filler text" };
+                            return new[] 
+                            { 
+                                "scan host [ ip address ] - This will look for any open ports!",
+                                "If you haven't found any yet, go ahead and investigate the 'scan network' command"
+                            };
                         
                         default:
                             return new[]
@@ -385,7 +413,7 @@ namespace Velocity.ViewModels
                             {
                                 return new[] { "Discovered all possible networks (in the tutorial at least)" };
                             }
-                            FoundNetwork(cd_ext[2]);
+                            NetworkFinder(cd_ext[2]);
                             if (Discovered.Length == 3)
                             {
                                 return new[]
@@ -412,7 +440,7 @@ namespace Velocity.ViewModels
                             {
                                 return new[] { "Discovered all possible networks (in the tutorial at least)" };
                             }
-                            FoundNetwork(cd_ext[2]);
+                            NetworkFinder(cd_ext[2]);
                             Debug.WriteLine(Discovered.Length.ToString());
                             if (Discovered.Length == 3)
                             {
@@ -438,6 +466,11 @@ namespace Velocity.ViewModels
                         default:
                             return new[] { "Invalid Selection" };
                     }
+                }
+                if (cd_ext[1]== "host")
+                {
+                    string[] host_port = PortFinder(cd_ext[2]);
+                    return new[] { "watashiwa egg" };
                 }
             }
             return cd switch
