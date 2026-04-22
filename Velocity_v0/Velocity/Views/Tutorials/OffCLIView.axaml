@@ -28,14 +28,17 @@
                                 Padding="10,20,0,30"
                                 Grid.Row="0"
                                 TextWrapping="Wrap">
-                                This is the Offense Tutorial! This aims
-                                to help you understand the process of
-                                hardening a machine. 
+                                This is the Offense Tutorial! This tutorial
+                                 will guide you through the basic flow of an attack. 
                                 <LineBreak/>
                                 <LineBreak/>
-                                "Hardening" in this space refers to the act of securing 
-                                a machine against potential cyber threats. There are a few things that can be done, 
-                                but for now, we are focusing on the firewall and the active services that are required
+                                As a forewarning, stating the obvious, this is for educational purposes
+                                 and using this knowledge without explicit authorisation is a crime. Stay safe!
+                                <LineBreak/>
+                                <LineBreak/>
+                                This particular exploit focuses on the SMB protocol (feel free to search it up, it'll help)
+                                and the target network is 192.168.32.128/25
+
                             </TextBlock>
      
 

@@ -135,8 +135,8 @@ namespace Velocity.ViewModels
                 return;
             }
             string userInput;
-            if (_givenCommand.connected == true) { userInput = "Shell1> " + CommandInput; }
-            else { userInput = "User@Offense> " + CommandInput; };
+            if (_givenCommand.connected == true) { userInput = "\nShell1> " + CommandInput; }
+            else { userInput = "\nUser@Offense> " + CommandInput; };
 
             OutputLines.Add(userInput);
             foreach (var line in _givenCommand.Process(CommandInput))
@@ -164,36 +164,20 @@ namespace Velocity.ViewModels
         // Answer checker for questions with input boxes
         public bool Answer_Check(string answer, string userInput)
         {
-            if (userInput == answer)
+            if (userInput.ToLower() == answer)
             {
                 return true;
             }
             return false;
         }
 
-
-        // All answer checks for questions with no input boxes
-        public bool One_Net()
-        {
-            OffCommands offense = _givenCommand;
-            return false;
-        }
-
-        public bool Four_Hosts()
-        {
-            OffCommands offense = _givenCommand;
-            return false;
-        }
-
-
         // Assign the matching answer check based on the question generated for the user
         // last case is to catch all else, but "all else" is already handled so is left with a lambda function of false
+        // This lab has no 'Checker' questions, but I am leaving this here in case of future question creation
         public Func<bool> Checker_Assign(string question)
         {
             return question switch
             {
-                "Scan at least 1 network" => One_Net,
-                "Scan at least 4 hosts" => Four_Hosts,
                 _ => () => false
             };
         }
@@ -220,15 +204,11 @@ namespace Velocity.ViewModels
         {
             Dictionary<string, string> Q_bank = new Dictionary<string, string>()
             {
-                { "Scan at least 1 network", String.Empty },
-                { "What host has port 22 open?","192.168.10.5" },
-                { "What host has port 445 open?", "10.10.10.15"},
-                { "How many hosts are in any of the networks?", "3"},
-                { "Scan at least 4 hosts",String.Empty},
-                { "What would the command be to scan the network 1.2.3.4?","scan network 1.2.3.4" },
-                { "What protocol typically runs over port 22?","ssh" },
-                { "What protocol typically runs over port 443?","https" },
-                { "What port is typically used for the 'Syslog' protocol?","514" },
+                { "How many total IP addresses are there in a network with '/25'?", "128" },
+                { "How many total IP addresses are there in a network with '/24'?","256" },
+                { "What host has port 445 open?", "192.168.32.133"},
+                { "What port is open on the machine identified first in the network?","4500" },
+                { "What protocol is running on the machine identified last in the network?","http" },
             };
 
             // Recursively assigning questions to variables using a tuple, ensuring that they are all unique
@@ -269,7 +249,6 @@ namespace Velocity.ViewModels
             return text;
         }
         public string[] Discovered = [];
-        public int Scan_Count;
         string Shell_ID;
         string target;
         string payload;
@@ -456,7 +435,11 @@ namespace Velocity.ViewModels
                     if (Shell_ID != String.Empty && cd_ext[1] == Shell_ID.ToLower())
                     {
                         connected = true;
-                        return new[] { $"Connected to {host_port[0]}" };
+                        return new[] 
+                        { 
+                            $"Connected to {host_port[0]}",
+                            "Type 'help' for a list of available commands",
+                        };
                     }
                     return new[]
                     {
@@ -509,7 +492,6 @@ namespace Velocity.ViewModels
                         
                         case "host":
                             host_port = PortFinder(cd_ext[2]);
-                            Debug.WriteLine(host_port[0]);
                             if (host_port[0] == "No Scan")
                             {
                                 return new[]
