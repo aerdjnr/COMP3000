@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Data;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using System;
@@ -169,28 +170,26 @@ namespace Velocity.ViewModels
 
 
         // All answer checks for questions with no input boxes
-        public bool FW_Up()
+        public bool One_Net()
         {
             InfoCommands info = _givenCommand;
+            if (info.Discovered.Length >= 3)
+            {
+                return true;
+            }
             return false;
         }
 
-        public bool Two_Services()
+        public bool Four_Hosts()
         {
             InfoCommands info = _givenCommand;
+            if (info.Scan_Count >= 4)
+            {
+                return true;
+            }
             return false;
         }
 
-        public bool Only_API()
-        {
-            InfoCommands info = _givenCommand;
-            return false;
-        }
-
-        public bool One_Rule()
-        {
-            return false;
-        }
 
         // Assign the matching answer check based on the question generated for the user
         // last case is to catch all else, but "all else" is already handled so is left with a lambda function of false
@@ -198,10 +197,8 @@ namespace Velocity.ViewModels
         {
             return question switch
             {
-                "Is the firewall up?" => FW_Up,
-                "Enable at least 2 services" => Two_Services,
-                "Ensure only the 'ApiService' is running" => Only_API,
-                "Add a firewall rule" => One_Rule,
+                "Scan at least 1 network" => One_Net,
+                "Scan at least 4 hosts" => Four_Hosts,
                 _ => () => false
             };
         }
@@ -228,13 +225,15 @@ namespace Velocity.ViewModels
         {
             Dictionary<string,string> Q_bank = new Dictionary<string,string>()
             {
-                {"Is the firewall up?", String.Empty },
-                {"what is the command to turn the firewall off?","fw disable" },
-                {"Enable at least 2 services", String.Empty},
-                {"Ensure only the 'ApiService' is running",String.Empty},
-                {"Add a firewall rule",String.Empty},
-                {"How do I check the currently enabled/running services?","service show" },
-                {"What is the port shown in the sample rule?","22" },
+                { "Scan at least 1 network", String.Empty },
+                { "What host has port 22 open?","192.168.10.5" },
+                { "What host has port 445 open?", "10.10.10.15"},
+                { "How many hosts are in any of the networks?", "3"},
+                { "Scan at least 4 hosts",String.Empty},
+                { "What would the command be to scan the network 1.2.3.4?","scan network 1.2.3.4" },
+                { "What protocol typically runs over port 22?","ssh" },
+                { "What protocol typically runs over port 443?","https" },
+                { "What port is typically used for the 'Syslog' protocol?","514" },
             };
             
             // Recursively assigning questions to variables using a tuple, ensuring that they are all unique
@@ -269,8 +268,8 @@ namespace Velocity.ViewModels
 
     public class InfoCommands
     {
-        string[] Discovered = [];
-
+        public string[] Discovered = [];
+        public int Scan_Count;
         public IEnumerable<string> Process(string command)
         {
             string[][] Network1 =
@@ -278,7 +277,7 @@ namespace Velocity.ViewModels
                     ["192.168.10.0/24","192.168.10.5","192.168.10.6","192.168.10.8"],
                     ["192.168.10.5","22"],
                     ["192.168.10.6","443"],
-                    ["192.168.10.8","20","21"]
+                    ["192.168.10.8","389"]
                 ];
 
             string[][] Network2 =
@@ -324,17 +323,19 @@ namespace Velocity.ViewModels
                 {
                     if (Network1[0].ToArray().Contains(host))
                     {
+                        Scan_Count += 1;
                         // Stores and returns the matching host and port 'object'
                         string[] Found = Network1[Network1[0].ToArray().IndexOf(host)];
                         return Found;
                     }
                     if (Network2[0].ToArray().Contains(host))
                     {
+                        Scan_Count += 1;
                         string[] Found = Network2[Network2[0].ToArray().IndexOf(host)];
                         return Found;
                     }
                 };
-                return new[] {"Address not discovered, or doesn't exist"}; 
+                return new[] {"No Scan"}; 
             }
             // Command splicing to specify command and necessary process required
             string cd = command.Trim().ToLowerInvariant();
@@ -441,7 +442,6 @@ namespace Velocity.ViewModels
                                 return new[] { "Discovered all possible networks (in the tutorial at least)" };
                             }
                             NetworkFinder(cd_ext[2]);
-                            Debug.WriteLine(Discovered.Length.ToString());
                             if (Discovered.Length == 3)
                             {
                                 return new[]
@@ -470,7 +470,18 @@ namespace Velocity.ViewModels
                 if (cd_ext[1]== "host")
                 {
                     string[] host_port = PortFinder(cd_ext[2]);
-                    return new[] { "watashiwa egg" };
+                    if (host_port[0] == "No scan") 
+                    {
+                        return new[]
+                        {
+                            "No network associated with that host"
+                        };
+                    }
+                    return new[] 
+                    { 
+                        "The following ports were found open:",
+                        $"{host_port[1]}" 
+                    };
                 }
             }
             return cd switch

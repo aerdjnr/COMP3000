@@ -154,7 +154,7 @@ namespace Velocity.ViewModels
         [RelayCommand]
         private void GoBack()
         {
-            _main.NavTut();
+            _main.NavRem();
         }
 
 

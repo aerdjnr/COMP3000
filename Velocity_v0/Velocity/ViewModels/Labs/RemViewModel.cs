@@ -21,7 +21,7 @@ namespace Velocity.ViewModels
         [RelayCommand]
         private void OpenDefense()
         {
-            _main.DefCLI();
+            _main.DefLab();
         }
 
         [RelayCommand]

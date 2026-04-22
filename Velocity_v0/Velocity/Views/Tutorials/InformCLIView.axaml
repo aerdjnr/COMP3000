@@ -28,14 +28,15 @@
                                 Padding="10,20,0,30"
                                 Grid.Row="0"
                                 TextWrapping="Wrap">
-                                This is the Defense Tutorial! This aims
+                                This is the Information Tutorial! This aims
                                 to help you understand the process of
-                                hardening a machine. 
+                                gathering information around a network. 
                                 <LineBreak/>
                                 <LineBreak/>
-                                "Hardening" in this space refers to the act of securing 
-                                a machine against potential cyber threats. There are a few things that can be done, 
-                                but for now, we are focusing on the firewall and the active services that are required
+                                The skills learned here can be used in an 
+                                offensive or defensive manner (it's all about intent!). A person
+                                with this knowledge could scan a network to find its weaknesses for securing
+                                or exploiting.
                             </TextBlock>
      
 

@@ -253,14 +253,14 @@ namespace Velocity.ViewModels
         {
             Dictionary<string,string> Q_bank = new Dictionary<string,string>()
             {
-                {"Is the firewall up?", String.Empty },
-                {"what is the command to turn the firewall off?","fw disable" },
-                {"Enable at least 2 services", String.Empty},
-                {"Ensure only the 'ApiService' is running",String.Empty},
-                {"Add a firewall rule",String.Empty},
-                {"How do I check the currently enabled/running services?","service show" },
-                {"What is the port shown in the sample rule?","22" },
-            };
+                { "Is the firewall up?", String.Empty },
+                { "what is the command to turn the firewall off?","fw disable" },
+                { "Enable at least 2 services", String.Empty},
+                { "Ensure only the 'ApiService' is running",String.Empty},
+                { "Add a firewall rule",String.Empty},
+                { "How do I check the currently enabled/running services?","service show" },
+                { "What is the port shown in the sample rule?","22" },
+            }; 
             
             // Recursively assigning questions to variables using a tuple, ensuring that they are all unique
             (string, string, string) No_Dupe() 
