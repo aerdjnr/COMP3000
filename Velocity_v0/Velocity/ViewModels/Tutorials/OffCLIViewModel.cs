@@ -311,8 +311,7 @@ namespace Velocity.ViewModels
                         string[] Found = Network1[Network1[0].ToArray().IndexOf(host)];
                         return Found;
                     }
-                }
-                ;
+                };
                 return new[] { "No Scan" };
             }
 
@@ -454,7 +453,7 @@ namespace Velocity.ViewModels
                     {
                         return new[] { "No active shells found" };
                     }
-                    if (Shell_ID != String.Empty && cd_ext[1] == Shell_ID)
+                    if (Shell_ID != String.Empty && cd_ext[1] == Shell_ID.ToLower())
                     {
                         connected = true;
                         return new[] { $"Connected to {host_port[0]}" };
@@ -508,9 +507,10 @@ namespace Velocity.ViewModels
                             }
                             return new[] { "That network isn't in this lab" };
                         
-                        case "scan":
+                        case "host":
                             host_port = PortFinder(cd_ext[2]);
-                            if (host_port[0] == "No scan")
+                            Debug.WriteLine(host_port[0]);
+                            if (host_port[0] == "No Scan")
                             {
                                 return new[]
                                 {
@@ -539,7 +539,7 @@ namespace Velocity.ViewModels
                             return new[] { "Invalid target" };
 
                         case "payload":
-                            if (cd_ext[2] == "192.168.32.133")
+                            if (cd_ext[2] == "eternalblue")
                             {
                                 payload = cd_ext[2];
                                 return new[] { $"Payload set: {payload}" };
