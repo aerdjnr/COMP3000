@@ -279,7 +279,7 @@ namespace Velocity.ViewModels
 
             string[] NetworkFinder(string network)
             {
-                if ((Network1[0][0] == network) || ("192.168.10.0" == network))
+                if ((Network1[0][0] == network) || ("192.168.32.128" == network))
                 {
                     if (Discovered.ToArray().Contains(Network1[0][1]))
                     {

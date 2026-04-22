@@ -6,10 +6,11 @@ namespace Velocity.ViewModels
     {
         public MainWindowViewModel()
         {
-            InitLogin();
+            //InitLogin();
             //DefCLI();
             //IntroCLI();
             //NavTut();
+            OffCLI();
         }
 
         [ObservableProperty]
