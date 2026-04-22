@@ -1,0 +1,177 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Velocity.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Velocity.Views.OffLabView"
+             x:DataType="vm:OffLabViewModel">
+
+    <SplitView IsPaneOpen="{Binding MenuState}"
+                DisplayMode="Overlay"
+                OpenPaneLength="350">
+
+        <!--Inside Pane Content-->
+        <SplitView.Pane>
+            <StackPanel>
+                <Button Content="☰"
+                        Command="{Binding MenuToggleCommand}"
+                        Margin="10,5,0,0"/>
+                <Button Content="Back"
+                        Margin="10,5,0,0"
+                        Command="{Binding GoBackCommand}"/>
+                <StackPanel>
+                    <ScrollViewer Height="500">
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+							
+                            <TextBlock
+                                Padding="10,20,0,30"
+                                Grid.Row="0"
+                                TextWrapping="Wrap">
+                                This is the Offense Tutorial! This tutorial
+                                 will guide you through the basic flow of an attack. 
+                                <LineBreak/>
+                                <LineBreak/>
+                                As a forewarning, stating the obvious, this is for educational purposes
+                                 and using this knowledge without explicit authorisation is a crime. Stay safe!
+                                <LineBreak/>
+                                <LineBreak/>
+                                This particular exploit focuses on the SMB protocol (feel free to search it up, it'll help)
+                                and the target network is 192.168.32.128/25
+
+                            </TextBlock>
+     
+
+                            <TextBlock
+                                Grid.Row="1"
+                                TextWrapping="Wrap"
+                                Text="{Binding Q1}"
+                                Padding="10,0,10,0"/>
+                            <TextBox 
+                                Grid.Row="2" 
+                                Watermark="Answer"
+                                Margin="10,0,10,0"
+                                Text="{Binding UserAnswer1, Mode=TwoWay}"
+                                IsVisible="{Binding HasInput1}"/>
+                            <Button 
+                                Grid.Row="3"
+                                Margin="10,5,0,20"
+                                Command="{Binding Checker1Command}">
+                                Check</Button>
+                            <TextBlock
+                                Grid.Row="3"
+                                Text="Correct!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q1Correct}"/>
+                            <TextBlock
+                                Grid.Row="3"
+                                Text="Try again!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q1Incorrect}"/>
+
+
+                            <TextBlock
+                                Grid.Row="4" 
+                                TextWrapping="Wrap"
+                                Text="{Binding Q2}"
+                                Padding="10,0,10,0"/>
+                            <TextBox 
+                                Grid.Row="5" 
+                                Watermark="Answer"
+                                Margin="10,0,10,0"
+                                Text="{Binding UserAnswer2, Mode=TwoWay}"
+                                IsVisible="{Binding HasInput2}"/>
+                            <Button 
+                                Grid.Row="6"
+                                Margin="10,5,0,20"
+                                Command="{Binding Checker2Command}">
+                                Check</Button>
+                            <TextBlock
+                                Grid.Row="6"
+                                Text="Correct!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q2Correct}"/>
+                            <TextBlock
+                                Grid.Row="6"
+                                Text="Try again!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q2Incorrect}"/>
+
+                            <TextBlock
+                                Grid.Row="7"
+                                TextWrapping="Wrap"
+                                Text="{Binding Q3}"
+                                Padding="10,0,10,0"/>
+                            <TextBox 
+                                Grid.Row="8" 
+                                Watermark="Answer"
+                                Margin="10,0,10,0"
+                                Text="{Binding UserAnswer3, Mode=TwoWay}"
+                                IsVisible="{Binding HasInput3}"/>
+                            <Button 
+                                Grid.Row="9"
+                                Margin="10,5,0,20"
+                                Command="{Binding Checker3Command}">
+                                Check</Button>
+                            <TextBlock
+                                Grid.Row="9"
+                                Text="Correct!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q3Correct}"/>
+                            <TextBlock
+                                Grid.Row="9"
+                                Text="Try again!"
+                                Padding="75,12,0,20"
+                                IsVisible="{Binding Q3Incorrect}"/>
+
+                        </Grid>
+                    </ScrollViewer>
+                </StackPanel>
+            </StackPanel>
+        </SplitView.Pane>
+
+        <!--Menu button and CLI-->
+        <SplitView.Content>
+            <Grid RowDefinitions="Auto,*">
+				<Button Content="☰"
+                        Command="{Binding MenuToggleCommand}"
+                        Grid.Row="0"
+                        VerticalAlignment="Top">
+                </Button>
+
+                <DockPanel Grid.Row="1" LastChildFill="True">
+                    <TextBox DockPanel.Dock="Top" 
+                        BorderThickness="0"
+                        Background="Transparent"
+                        FocusAdorner="{x:Null}"
+                        BorderBrush="Transparent"
+                        TextWrapping="Wrap"
+                        IsReadOnly="True"
+                        Text="Type 'help' to get started with the CLI, for context and questions, click the ☰ button in the top left.">
+                    </TextBox>
+		
+                    <TextBox DockPanel.Dock="Bottom"
+                        Text="{Binding CommandInput, UpdateSourceTrigger=PropertyChanged}"
+                        FontFamily="Consolas"
+                        KeyDown="PressEnter"
+                        Watermark="Type here:">
+                    </TextBox>
+        
+                    <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Hidden">
+                        <ItemsControl ItemsSource="{Binding OutputLines}"
+                                      Padding="10,10,0,0">
+                            <ItemsControl.ItemTemplate>
+					            <DataTemplate>
+					                <TextBlock Text="{Binding}"
+                                        FontFamily="Consolas"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+				
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DockPanel>
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
+
+</UserControl>

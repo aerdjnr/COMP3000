@@ -25,6 +25,8 @@ namespace Velocity.ViewModels
         public void DefCLI() => CurrentView = new DefCLIViewModel(this);
         public void DefLab() => CurrentView = new DefLabViewModel(this);
         public void InformCLI() => CurrentView = new InformCLIViewModel(this);
+        public void InformLab() => CurrentView = new InformLabViewModel(this);
         public void OffCLI() => CurrentView = new OffCLIViewModel(this);
+        public void OffLab() => CurrentView = new OffLabViewModel(this);
     }
 }

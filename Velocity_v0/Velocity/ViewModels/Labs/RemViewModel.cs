@@ -13,12 +13,6 @@ namespace Velocity.ViewModels
         public override double? SetHeight => 500;
 
         [RelayCommand]
-        private void OpenIntroduction()
-        {
-            _main.IntroCLI();
-        }
-
-        [RelayCommand]
         private void OpenDefense()
         {
             _main.DefLab();

@@ -31,6 +31,12 @@
     <Compile Update="Views\Labs\DefLabView.axaml.cs">
       <DependentUpon>DefLabView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Labs\InformLabView.axaml.cs">
+      <DependentUpon>InformLabView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Labs\OffLabView.axaml.cs">
+      <DependentUpon>OffLabView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Labs\RemView.axaml.cs">
       <DependentUpon>RemView.axaml</DependentUpon>
     </Compile>
