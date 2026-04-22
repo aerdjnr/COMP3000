@@ -134,7 +134,10 @@ namespace Velocity.ViewModels
             {
                 return;
             }
-            string userInput = "User@Offense> " + CommandInput;
+            string userInput;
+            if (_givenCommand.connected == true) { userInput = "Shell1> " + CommandInput; }
+            else { userInput = "User@Offense> " + CommandInput; };
+
             OutputLines.Add(userInput);
             foreach (var line in _givenCommand.Process(CommandInput))
             {
@@ -257,15 +260,20 @@ namespace Velocity.ViewModels
             (Q3a, HasInput3) = Q_Gen(Q_bank, Q3, Q3a, HasInput3);
         }
     }
-
     public class OffCommands
     {
+        string[] sh_Exit()
+        {
+            connected = false;
+            string[] text = { "Exiting Shell" };
+            return text;
+        }
         public string[] Discovered = [];
         public int Scan_Count;
         string Shell_ID;
         string target;
         string payload;
-        bool connected;
+        public bool connected;
         string[] host_port;
         public IEnumerable<string> Process(string command)
         {
@@ -322,31 +330,19 @@ namespace Velocity.ViewModels
                     {
                         "help" => new[]
                         {
-                        "Commands:",
-                        "   exit          - Disconnects from the current shell",
-                        "   directory     - Lists files in the target machine",
+                            "Commands:",
+                            "   exit          - Disconnects from the current shell",
+                            "   directory     - Lists files in the target machine",
                         },
-                        "scan" => new[]
-                        {
-                        "scan options:",
-                        "    network - Scan a given network to find active machines",
-                        "    host  - Scan discovered hosts for open ports"
-                         },
-                        "exploit" => new[]
-                        {
-                        "exploit options:",
-                        "    target       [ host ] - Select the target machine to run the exploit on",
-                        "    payload      [ payload ] - Set the payload for the exploit",
-                        "    run - start the exploit with the given parameters"
-                        },
-                        "connect" => new[]
-                        {
-                        "Active Shells:",
-                        Shell_ID
+                        "exit" => sh_Exit(),
+                        "directory" => new[] 
+                        { 
+                            "secrets.txt     funnyCat.mp4     podcast.mp3     passwords.txt",
+                            "folder1     avingersMovie.mp4     flag_1a2b3c"
                         },
                         _ => new[]
                         {
-                        "Invalid command"
+                            "Invalid command"
                         }
                     };
                 }
@@ -387,6 +383,10 @@ namespace Velocity.ViewModels
             // Command + option
             if (cd_ext.Length == 2)
             {
+                if (connected == true) 
+                { 
+                
+                }
                 if (cd_ext[0] == "scan")
                 {
                     switch (cd_ext[1])
@@ -410,7 +410,7 @@ namespace Velocity.ViewModels
                         default:
                             return new[]
                             {
-                              "Invalid option"
+                                "Invalid option"
                             };
                     }
                 }
@@ -465,14 +465,14 @@ namespace Velocity.ViewModels
                         "Active Shells:",
                         Shell_ID
                     };
-
                 }
+                
                 return cd switch
                 {
-                    _ => new[]
+                     _ => new[]
                     {
-                         "Invalid command or option"
-                    }
+                        "Invalid command or option"
+                     }
                 };
             }
 
