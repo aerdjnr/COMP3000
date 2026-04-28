@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Renci.SshNet;
-using System.Diagnostics;
 
 namespace Velocity.ViewModels
 {
@@ -19,17 +17,6 @@ namespace Velocity.ViewModels
         private ViewModelBase _CurrentView;
 
 
-        public void placeholder_SSH(string host, string username, string password, string command)
-        {
-            using (var client = new SshClient(host, username, password))
-            {
-                client.Connect();
-
-                var test = client.CreateCommand(command);
-                string result = test.Execute();
-                Debug.WriteLine(result);
-            }
-        }
         public void InitLogin() => CurrentView = new LoginViewModel(this);
         public void NavHome() => CurrentView = new HomeViewModel(this);
         public void NavTut() => CurrentView = new TutViewModel(this);

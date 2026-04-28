@@ -3,8 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-
 
 
 namespace Velocity.ViewModels
@@ -19,9 +19,15 @@ namespace Velocity.ViewModels
         {
             _main = main;
             DefLabQBank();
+            Debug.WriteLine(Gather());
         }
+        string Gather()
+        {
+            Connector _connector = new();
+            string test = _connector.Con_SSH("192.168.15.10", "defense", "defense", "echo test");
+            return test;
 
-
+        }
         private readonly DefCommands _givenCommand = new();
         
         public ObservableCollection<string> OutputLines { get; } = new();
@@ -248,7 +254,7 @@ namespace Velocity.ViewModels
             return (answer, InputShown);
         }
 
-        // Question bank for all the questions in this tutorial lab
+        // Question bank for all the questions in this lab
         public void DefLabQBank()
         {
             Dictionary<string,string> Q_bank = new Dictionary<string,string>()

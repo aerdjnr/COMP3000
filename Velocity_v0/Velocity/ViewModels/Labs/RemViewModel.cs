@@ -11,7 +11,7 @@ namespace Velocity.ViewModels
         public RemViewModel(MainWindowViewModel main)
         {
             _main = main;
-            _main.placeholder_SSH("192.168.15.10", "defense", "defense", "echo cat");
+            //_main.placeholder_SSH("192.168.15.10", "defense", "defense", "echo cat");
         }
         public override double? SetWidth => 700;
         public override double? SetHeight => 500;
