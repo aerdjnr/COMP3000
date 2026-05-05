@@ -17,6 +17,7 @@ try:
             octect3 = str(r.randint(1,254))
             network = (octect1+"."+octect2+"."+octect3+".0")
             return network
+
         def ServiceGen(flag):
             serviceBank = [
                 ["telnet.service","23"],
@@ -69,12 +70,12 @@ try:
                     a_or_d = "ALLOW   "
                 portGen = str(r.randint(1000,1024))
                 if int(portGen)>999:
-                    ufw_Rules.append(portGen+"/tcp"+"              "+a_or_d+"      "+subnet+"/24")
+                    ufw_Rules.append(portGen+"/tcp"+"          "+a_or_d+"      "+subnet+"/24")
                     continue
                 if int(portGen)>99:
-                    ufw_Rules.append(portGen+"/tcp"+"               "+a_or_d+"      "+subnet+"/24")
+                    ufw_Rules.append(portGen+"/tcp"+"           "+a_or_d+"      "+subnet+"/24")
                 else:
-                    ufw_Rules.append(portGen+"/tcp "+"               "+a_or_d+"      "+subnet+"/24")
+                    ufw_Rules.append(portGen+"/tcp "+"           "+a_or_d+"      "+subnet+"/24")
 
     
             #for x in range(len(ufw_Rules)):
@@ -106,6 +107,8 @@ try:
 
         if s.argv[2] == "-s":
             Rules = Assemble(3)
+            print(Rules[0])
+            print(Rules[1])
             for x in range(2,len(Rules)):
                 print(f"[ {x-1}]"+Rules[x])
 
@@ -136,7 +139,7 @@ try:
                 action = "DENY    "
             else:
                 action = "ALLOW   "
-            # direction = parsed_q[1]
+
             net = parsed_q[2]
             port = parsed_q[4]
             if int(port)>999:
