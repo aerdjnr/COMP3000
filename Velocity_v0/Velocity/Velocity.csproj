@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.9" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.9" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.9" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.9" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.9">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="ReactiveUI" Version="22.3.1" />
+    <PackageReference Include="SSH.NET" Version="2025.1.0" />
+    <PackageReference Include="System.DirectoryServices.Protocols" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Labs\DefLabView.axaml.cs">
+      <DependentUpon>DefLabView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Labs\InformLabView.axaml.cs">
+      <DependentUpon>InformLabView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Labs\OffLabView.axaml.cs">
+      <DependentUpon>OffLabView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Labs\RemView.axaml.cs">
+      <DependentUpon>RemView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tutorials\OffCLIView.axaml.cs">
+      <DependentUpon>OffCLIView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tutorials\InformCLIView.axaml.cs">
+      <DependentUpon>InformCLIView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tutorials\TutView.axaml.cs">
+      <DependentUpon>TutView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainWindow.axaml.cs">
+      <DependentUpon>MainWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LoginView.axaml.cs">
+      <DependentUpon>LoginView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\HomeView.axaml.cs">
+      <DependentUpon>HomeView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tutorials\DefCLIView.axaml.cs">
+      <DependentUpon>DefCLIView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tutorials\IntroCLIView.axaml.cs">
+      <DependentUpon>IntroCLIView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

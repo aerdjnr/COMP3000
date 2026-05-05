@@ -1,0 +1,141 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Velocity.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Velocity.Views.IntroCLIView"
+             x:DataType="vm:IntroCLIViewModel">
+    
+    <SplitView IsPaneOpen="{Binding MenuState}"
+                DisplayMode="Overlay"
+                OpenPaneLength="400">
+
+        <!--Inside Pane Content-->
+        <SplitView.Pane>
+            <StackPanel>
+                <Button Content="☰"
+                        Command="{Binding MenuToggleCommand}"
+                        Margin="10,5,0,0"/>
+                <Button Content="Back"
+                        Margin="10,5,0,0"
+                        Command="{Binding GoBackCommand}"/>
+                <StackPanel>
+                    <ScrollViewer Height="500">
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+							
+                            <TextBlock
+                                Padding="10,20,0,30"
+                                Grid.Row="0"
+                                TextWrapping="Wrap">
+                                This is where the scene is set. Each lab or tutorial will provide further
+                                information which you will need to better understand the concept as well as 
+                                provide some basic insight into the objectives.
+                                <LineBreak/>
+                                <LineBreak/>
+                                Below are the two different types of question:
+                            </TextBlock>
+     
+
+                            <TextBlock
+                                Grid.Row="1" 
+                                TextWrapping="Wrap"
+                                Text="A task involving the CLI"
+                                Padding="10,0,10,0"/>
+                            <TextBox 
+                                Grid.Row="2" 
+                                Watermark="Answer" 
+                                IsVisible="False"/>
+                            <Button 
+                                Grid.Row="3"
+                                Margin="10,5,0,5"
+                                Command="{Binding CoinToss1Command}">
+                                Check</Button>
+                            <TextBlock
+                                Grid.Row="3"
+                                TextWrapping="Wrap"
+                                Text="{Binding Result1}"
+                                Padding="75,19,0,20"/>
+                            <TextBlock
+                                Grid.Row="4"
+                                TextWrapping="Wrap"
+                                Padding="10,0,10,30"
+                                Text="These are questions with no 'answer' to give. It carries out a check in the background and let's you know if what you did was correct."/>
+
+
+                            <TextBlock
+                                Grid.Row="5" 
+                                TextWrapping="Wrap"
+                                Text="A test of knowledge"
+                                Padding="10,0,10,0"/>
+                            <TextBox 
+                                Grid.Row="6" 
+                                Margin="10,0,10,0"
+                                Watermark="Answer"/>
+                            <Button 
+                                Grid.Row="7"
+                                Margin="10,5,0,5"
+                                Command="{Binding CoinToss2Command}">
+                                Check</Button>
+                            <TextBlock
+                                Grid.Row="7"
+                                TextWrapping="Wrap"
+                                Text="{Binding Result2}"
+                                Padding="75,19,0,20"/>
+                            <TextBlock
+                                Grid.Row="8"
+                                TextWrapping="Wrap"
+                                Text="These are questions that will test your understanding (and memory) of the lab"
+                                Padding="10,0,10,0"/>
+
+                        </Grid>
+                    </ScrollViewer>
+                </StackPanel>
+            </StackPanel>
+        </SplitView.Pane>
+
+        <!--Menu button and CLI-->
+        <SplitView.Content>
+            <Grid RowDefinitions="Auto,*">
+				<Button Content="☰"
+                        Command="{Binding MenuToggleCommand}"
+                        Grid.Row="0"
+                        VerticalAlignment="Top">
+                </Button>
+
+                <DockPanel Grid.Row="1" LastChildFill="True">
+                    <TextBox DockPanel.Dock="Top" 
+                        BorderThickness="0"
+                        Background="Transparent"
+                        FocusAdorner="{x:Null}"
+                        BorderBrush="Transparent"
+                        TextWrapping="Wrap"
+                        IsReadOnly="True"
+                        Text="This is a tutorial of the tutorials! Each button opens a trial version of the real labs so you can get a basic understanding (or a warm up) before the lab! To get started, type 'help' to get a list of available commands you can use. For further context, click the '☰' button in the top left.">
+                    </TextBox>
+		
+                    <TextBox DockPanel.Dock="Bottom"
+                        Text="{Binding CommandInput, UpdateSourceTrigger=PropertyChanged}"
+                        FontFamily="Consolas"
+                        KeyDown="PressEnter"
+                        Watermark="Type here:">
+                    </TextBox>
+        
+                    <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding OutputLines}"
+                                      Padding="10,10,0,0">
+                            <ItemsControl.ItemTemplate>
+					            <DataTemplate>
+					                <TextBlock Text="{Binding}"
+                                        FontFamily="Consolas"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+				
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DockPanel>
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
+
+</UserControl>
